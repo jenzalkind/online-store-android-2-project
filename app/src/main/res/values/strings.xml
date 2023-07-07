@@ -2,10 +2,15 @@
     <string name="app_name">online-store</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="login">login</string>
-    <string name="email">email</string>
-    <string name="password">password</string>
+    <string name="login">Log in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="signup">sign up</string>
-    <string name="register">new to us?</string>
-    <string name="forgott_pass">forgot password</string>
+    <string name="register">New to us?</string>
+    <string name="forgot_pass">Forgot password?</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgott_pass">Forgot password?</string>
 </resources>
