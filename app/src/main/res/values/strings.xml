@@ -14,4 +14,12 @@
     <string name="sign_up">Sign up</string>
     <string name="forgott_pass">Forgot password?</string>
     <string name="reset_password">Reset password</string>
+    <string name="warning1">Please enter your email</string>
+    <string name="warning2">Please enter your password</string>
+    <string name="warning3">Please enter your first name</string>
+    <string name="warning4">Please enter your last name</string>
+    <string name="warning5">Invalid email format</string>
+    <string name="warning6">Please enter password again</string>
+    <string name="warning7">Password did not match</string>
+    <string name="success">Successfully saved</string>
 </resources>

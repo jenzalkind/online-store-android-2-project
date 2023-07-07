@@ -41,6 +41,7 @@
         android:layout_width="275dp"
         android:layout_height="320dp"
         android:id="@+id/login_tab"
+        android:gravity="center"
         android:background="@drawable/white_rectangle"
         android:orientation="vertical">
 
