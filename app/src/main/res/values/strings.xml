@@ -2,4 +2,10 @@
     <string name="app_name">online-store</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">login</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="signup">sign up</string>
+    <string name="register">new to us?</string>
+    <string name="forgott_pass">forgot password</string>
 </resources>

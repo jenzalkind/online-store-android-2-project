@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/blackkkk"
+            android:textColor="black"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_margin="10dp"
@@ -44,13 +44,13 @@
             android:background="@drawable/textview"
             android:layout_marginTop="5dp"
             android:textSize="12sp"
-            android:hint="@string/login_email"
-            android:textColorHint="@color/grayyy"
+            android:hint="@string/email"
+            android:textColorHint="gray"
             android:textStyle="bold"
             android:paddingStart="10dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/email"
-            android:id="@+id/usernameLoginET"/>
+            android:id="@+id/usernameLoginET" />
 
         <EditText
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:layout_marginTop="5dp"
             android:textSize="12sp"
             android:hint="@string/password"
-            android:textColorHint="@color/grayyy"
+            android:textColorHint="gray"
             android:textStyle="bold"
             android:paddingStart="10dp"
             android:drawablePadding="8dp"
@@ -72,13 +72,13 @@
 
         <Button
             android:layout_gravity="center"
-            android:backgroundTint="@color/green"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:text="@string/login_btn"
+            android:backgroundTint="@color/blue"
+            android:text="@string/login"
             android:gravity="center"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -94,12 +94,12 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:layout_marginStart="15dp"
-                android:text="@string/forgotten_password"
+                android:text="@string/forgott_pass"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:gravity="right"
+                android:gravity="end"
                 android:padding="5dp"
-                android:textColor="@color/light_blue"
+                android:textColor="blue"
                 android:id="@+id/forgottenpsw_btn"
                 />
 
@@ -115,7 +115,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/q"
+                android:text="@string/register"
                 android:textSize="11sp"
                 android:textStyle="bold"/>
 
@@ -123,10 +123,10 @@
                 android:padding="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_up"
+                android:text="@string/signup"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:textColor="@color/light_blue"
+                android:textColor="blue"
                 android:id="@+id/sign_up"/>
         </LinearLayout>
 
