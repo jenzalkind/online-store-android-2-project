@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/homepage_background"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:id="@+id/fragment_login">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="51"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:layoutDirection="ltr">
+
+        <ImageView
+            android:id="@+id/arrowback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top"
+            android:layout_margin="30dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="227dp"
+            android:layout_height="123dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:src="@drawable/text_logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:id="@+id/login_tab"
+        android:background="@drawable/white_rectangle"
+        android:orientation="vertical">
+
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_pass"
+            android:textColor="@color/black"
+            android:fontFamily="@font/linoleo"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/signup_textview"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:hint="@string/email"
+            android:textColorHint="@color/black_trans"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
+            android:id="@+id/email"/>
+
+
+        <Button
+            android:id="@+id/signBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/button_color"
+            android:gravity="center"
+            android:text="@string/reset_password"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="324"/>
+</LinearLayout>
