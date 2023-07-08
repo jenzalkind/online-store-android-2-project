@@ -9,7 +9,11 @@
         android:id="@+id/all_Items_Fragment"
         android:name="com.example.online_store.All_Items_Fragment"
         android:label="fragment_all__items_"
-        tools:layout="@layout/fragment_all__items_" />
+        tools:layout="@layout/fragment_all__items_" >
+        <action
+            android:id="@+id/action_all_Items_Fragment_to_updateProductFragment"
+            app:destination="@id/updateProductFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -52,5 +56,15 @@
             android:id="@+id/action_forgotPasswordFragment2_to_loginFragment"
             app:destination="@id/loginFragment" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/updateProductFragment"
+        android:name="com.example.online_store.UpdateProductFragment"
+        android:label="UpdateProductFragment"
+        tools:layout="@layout/updateobject"
+        >
+        <action
+            android:id="@+id/action_updateProductFragment_to_all_Items_Fragment"
+            app:destination="@id/all_Items_Fragment" />
     </fragment>
 </navigation>
