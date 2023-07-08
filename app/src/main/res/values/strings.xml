@@ -27,4 +27,12 @@
     <string name="close" />
     <string name="sent" />
     <string name="loading" />
+    <string name="filter">Filter</string>
+    <string name="choose_wanted_categories">Choose wanted categories</string>
+    <string name="mark_all">Mark all</string>
+    <string name="clear_all">Clear all</string>
+    <string name="type1">Best rated</string>
+    <string name="type2">Bellow 50$</string>
+    <string name="delete">Delete</string>
+    <string name="create">Create</string>
 </resources>
