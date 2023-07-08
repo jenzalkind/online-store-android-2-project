@@ -34,8 +34,8 @@ class Detail_ItemFragment : Fragment() {
             binding.released3.text = item.released
             binding.rating3.text = item.rating
 
-            binding.price3.text= item.price
-            binding.quantity3.text= item.quantity
+            binding.price3.text= item.price+" $"
+            binding.quantity3.text= item.quantity+" quantity"
 
             Glide.with(requireContext()).load(item.background_image).circleCrop()
                 .into(binding.backgroundImage4)
