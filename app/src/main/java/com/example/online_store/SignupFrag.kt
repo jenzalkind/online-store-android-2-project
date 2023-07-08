@@ -55,15 +55,15 @@ class SignupFrag : Fragment() {
 
     private fun setBackArrowListener(){
         arrow.setOnClickListener{
-            //findNavController().navigate(R.id.action_signUpFragment_to_loginFragment) //TODO
+            findNavController().navigate(R.id.action_back_sign_up_to_login_Fragment)
         }
     }
 
     private fun setSignUpBtnListener(signUpBtn: Button) {
         signUpBtn.setOnClickListener {
             val builder = AlertDialog.Builder(context)
-            //val dialogView = layoutInflater.inflate(R.layout.loading_item,null)
-            //builder.setView(dialogView)
+            val dialogView = layoutInflater.inflate(R.layout.loading_item,null)
+            builder.setView(dialogView)
             builder.setCancelable(false)
             isdialog = builder.create()
             isdialog.show()
@@ -117,7 +117,7 @@ class SignupFrag : Fragment() {
                         Toast.makeText(context, R.string.success, Toast.LENGTH_SHORT).show()
                     }
                     isdialog.dismiss()
-                    //findNavController().navigate(R.id.action_signUpFragment_to_mainFragment) // TODO
+                    findNavController().navigate(R.id.action_sign_up_to_all_Items_Fragment)
 
                 } else {
                     isdialog.dismiss()

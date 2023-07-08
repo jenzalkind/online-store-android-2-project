@@ -2,4 +2,6 @@
 <resources>
     <item name="action_loginFragment_to_mainFragment" type="id" />
     <item name="action_loginFragment_to_signUpFragment" type="id" />
+    <item name="emailEditText" type="id" />
+    <item name="resetButton" type="id" />
 </resources>
