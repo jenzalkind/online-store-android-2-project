@@ -47,8 +47,10 @@
         android:name="com.example.online_store.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_pass">
+
         <action
             android:id="@+id/action_forgotPasswordFragment2_to_loginFragment"
             app:destination="@id/loginFragment" />
+
     </fragment>
 </navigation>
