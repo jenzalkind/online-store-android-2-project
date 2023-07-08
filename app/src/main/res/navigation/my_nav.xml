@@ -10,4 +10,32 @@
         android:name="com.example.online_store.All_Items_Fragment"
         android:label="fragment_all__items_"
         tools:layout="@layout/fragment_all__items_" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.online_store.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_all_Items_Fragment"
+            app:destination="@id/all_Items_Fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signupFrag2"
+            app:destination="@id/sign_up" />
+        <action
+            android:id="@+id/action_loginFragment_to_sign_up"
+            app:destination="@id/sign_up" />
+        <action
+            android:id="@+id/action_loginFragment_to_sign_up_fregment"
+            app:destination="@id/sign_up_fregment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_up_fregment"
+        android:name="com.example.online_store.SignupFrag"
+        android:label="SignupFrag"
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/action_sign_up_to_all_Items_Fragment"
+            app:destination="@id/all_Items_Fragment" />
+    </fragment>
 </navigation>

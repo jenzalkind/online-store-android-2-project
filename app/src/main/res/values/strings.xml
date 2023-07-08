@@ -22,4 +22,9 @@
     <string name="warning6">Please enter password again</string>
     <string name="warning7">Password did not match</string>
     <string name="success">Successfully saved</string>
+    <string name="forget" />
+    <string name="reset" />
+    <string name="close" />
+    <string name="sent" />
+    <string name="loading" />
 </resources>
