@@ -3,11 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/all_Items_Fragment">
-
+    app:startDestination="@id/admin_Fragment">
     <fragment
-        android:id="@+id/all_Items_Fragment"
-        android:name="com.example.online_store.All_Items_Fragment"
-        android:label="fragment_all__items_"
-        tools:layout="@layout/fragment_all__items_" />
+        android:id="@+id/add_ItemFragment"
+        android:name="com.example.online_store.Add_ItemFragment"
+        android:label="add_item_layout"
+        tools:layout="@layout/add_item_layout" >
+        <action
+            android:id="@+id/action_add_ItemFragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment"
+            app:popUpTo="@id/fireBase_AllItemsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/api_All_Items_Fragment"
+        android:name="com.example.online_store.Api_All_Items_Fragment"
+        android:label="api_fragment_all__items"
+        tools:layout="@layout/api_fragment_all__items" >
+        <action
+            android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment"
+            app:popUpTo="@id/admin_Fragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail_ItemFragment"
+        android:name="com.example.online_store.Detail_ItemFragment"
+        android:label="detail_item_layout"
+        tools:layout="@layout/detail_item_layout" />
+    <fragment
+        android:id="@+id/fireBase_AllItemsFragment"
+        android:name="com.example.online_store.FireBase_AllItemsFragment"
+        android:label="fire_base_all_items_layout"
+        tools:layout="@layout/fire_base_all_items_layout" >
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment"
+            app:popUpTo="@id/admin_Fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_edit_ItemFragment"
+            app:destination="@id/edit_ItemFragment" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_add_ItemFragment"
+            app:destination="@id/add_ItemFragment" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
+            app:destination="@id/detail_ItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/admin_Fragment"
+        android:name="com.example.online_store.Admin_Fragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" >
+        <action
+            android:id="@+id/action_admin_Fragment_to_api_All_Items_Fragment"
+            app:destination="@id/api_All_Items_Fragment" />
+        <action
+            android:id="@+id/action_admin_Fragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_ItemFragment"
+        android:name="com.example.online_store.Edit_ItemFragment"
+        android:label="fragment_edit__item"
+        tools:layout="@layout/fragment_edit__item" >
+        <action
+            android:id="@+id/action_edit_ItemFragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment"
+            app:popUpTo="@id/fireBase_AllItemsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -13,9 +13,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.android.volley.Response.success
-import com.example.easylearn.User
 import com.example.online_store.databinding.FragmentSignUpBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.auth.FirebaseAuth
