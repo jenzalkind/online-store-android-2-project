@@ -66,6 +66,10 @@ class Add_ItemFragment : Fragment() {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
 
 
+        binding.imageBtn.setOnClickListener {
+            pickImageLauncher.launch(arrayOf("image/*"))
+        }
+
         binding.dateBtn.setOnClickListener{
             val dpd = DatePickerDialog(requireContext(), { view, mYear, mMonth, mDay ->
                 binding.dateBtn.text = "$mDay/"+(mMonth+1).toString()+"/$mYear"
@@ -111,7 +115,7 @@ class Add_ItemFragment : Fragment() {
 
             val item  = Item(
                 id= UUID.randomUUID().toString(),
-                binding.name2.text.toString(),
+                binding.name2.text.toString().lowercase(),
                 date_string,
                 binding.rating2.text.toString(),
                 imageUri.toString(),
@@ -129,17 +133,12 @@ class Add_ItemFragment : Fragment() {
 
             db.collection("Item").add(item)
 
-            //////////////////
-            /////////////// need to add to fire base
-            ///////////////
 
             findNavController().navigate(R.id.action_add_ItemFragment_to_fireBase_AllItemsFragment)
 
         }
 
-        binding.imageBtn.setOnClickListener {
-            pickImageLauncher.launch(arrayOf("image/*"))
-        }
+
         return binding.root
     }
 

@@ -48,7 +48,7 @@ class Api_All_Items_Fragment : Fragment() {
 
 
 
-        for (k in 1 until 3)
+        for (k in 1 until 6)
         {
 
             val apiSample = apiSample2.plus(k.toString())
@@ -69,7 +69,7 @@ class Api_All_Items_Fragment : Fragment() {
 
                     val item = Item(
                         jsonObj.getInt("id").toString(),
-                        jsonObj.getString("name"),
+                        jsonObj.getString("name").lowercase(),
                         jsonObj.getString("released"),
                         jsonObj.getString("rating"),
                         //jsonObj.getString("genres"),

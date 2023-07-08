@@ -39,7 +39,7 @@ class FireBase_ItemAdapter(val items:List<Item>, val callBack:ItemListener)
             binding.released4.text = item.released
             binding.rating4.text = item.rating
             Glide.with(binding.root).load(item.background_image).circleCrop().into(binding.backgroundImage4)
-            binding.price4.text =item.price
+            binding.price4.text =item.price+" $"
             binding.quantity4.text =item.quantity
 
 

@@ -1,29 +1,26 @@
 package com.example.online_store
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-
-import com.example.online_store.databinding.FireBaseAllItemsLayoutBinding
+import com.example.online_store.databinding.FragmentCustomerBuyBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.runBlocking
+
+/////// FireBase buy
 
 
-/////// FireBase
+class Customer_Fragment_buy : Fragment() {
 
 
-class FireBase_AllItemsFragment : Fragment() {
-
-    private var _binding : FireBaseAllItemsLayoutBinding? = null
+    private var _binding : FragmentCustomerBuyBinding? = null
 
     private val binding get() = _binding!!
 
@@ -31,67 +28,20 @@ class FireBase_AllItemsFragment : Fragment() {
     val collectionRef = db.collection("Item")
 
 
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FireBaseAllItemsLayoutBinding.inflate(inflater,container,false)
-
-        binding.fab.setOnClickListener {
-
-            //ItemManager.items.clear()
-            findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
-        }
-
-        var search_list: List<Item>
-        binding.searchButton.setOnClickListener{
-            runBlocking {
-
-                search_list=searchItemsByName(binding.search.text.toString())
-                binding.recycler.adapter =
-                    FireBase_ItemAdapter(search_list, object : FireBase_ItemAdapter.ItemListener {
-
-                        override fun onItemClicked(index: Int) {
-
-                            Toast.makeText(
-                                requireContext(),
-                                "${ItemManager.items[index]}", Toast.LENGTH_SHORT
-                            ).show()
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                bundleOf("item" to index)
-                            )
-
-                        }
-
-                        override fun onItemLongClicked(index: Int) {
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
-                            )
-                        }
-                    })
-
-
-
-
-            }
-        }
-
-
-
-        return binding.root
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_customers__fire_base__all_items, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.getString("title")?.let {
-            Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(),it, Toast.LENGTH_SHORT).show()
         }
-
 
 
 
@@ -115,7 +65,7 @@ class FireBase_AllItemsFragment : Fragment() {
                     // Create a new Item object and add it to the list
                     val item = Item(
                         id,
-                        name.lowercase(),
+                        name,
                         released,
                         rating,
                         background_image,
@@ -127,7 +77,7 @@ class FireBase_AllItemsFragment : Fragment() {
                 }
 
 
-                binding.recycler.adapter =
+                binding.recycler2.adapter =
                     FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {
@@ -162,17 +112,16 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
-
-
-
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler2.layoutManager = LinearLayoutManager(requireContext())
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            ) = makeFlag(
+                ItemTouchHelper.ACTION_STATE_SWIPE,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -188,10 +137,7 @@ class FireBase_AllItemsFragment : Fragment() {
                 var deletedItem = ItemManager.items[position].id
 
                 ItemManager.remove(viewHolder.adapterPosition)
-                binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
+                binding.recycler2.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
 
 
 
@@ -223,19 +169,14 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
-
-
-
-
             }
-        }).attachToRecyclerView(binding.recycler)
+        }).attachToRecyclerView(binding.recycler2)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

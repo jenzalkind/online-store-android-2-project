@@ -91,7 +91,7 @@ class Edit_ItemFragment : Fragment() {
                             deleteAndAddItem(
 
                                 item.id,
-                                binding.name2.text.toString(),
+                                binding.name2.text.toString().lowercase(),
                                 date_string,
                                 binding.rating2.text.toString(),
                                 item.background_image,

@@ -74,4 +74,18 @@
             app:popUpTo="@id/fireBase_AllItemsFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/customer_Fragment_buy"
+        android:name="com.example.online_store.Customer_Fragment_buy"
+        android:label="fragment_customer__buy"
+        tools:layout="@layout/fragment_customer__buy" >
+        <action
+            android:id="@+id/action_customer_Fragment_buy_to_customers_FireBase_AllItemsFragment"
+            app:destination="@id/customers_FireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customers_FireBase_AllItemsFragment"
+        android:name="com.example.online_store.Customers_FireBase_AllItemsFragment"
+        android:label="fragment_customers__fire_base__all_items"
+        tools:layout="@layout/fragment_customers__fire_base__all_items" />
 </navigation>

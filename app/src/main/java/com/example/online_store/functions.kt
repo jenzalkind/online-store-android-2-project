@@ -1,5 +1,6 @@
 package com.example.online_store
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import java.util.Random
@@ -74,6 +75,37 @@ suspend fun deleteAndAddItem(
     }
 }
 
+suspend fun searchItemsByName(partialName: String): List<Item> {
+
+    val collectionName = "Item"
+    val collectionRef = db.collection(collectionName)
+
+    val querySnapshot = collectionRef
+        .orderBy("name")
+        .startAt(partialName.lowercase())
+        .endAt(partialName.lowercase() + "\uf8ff")
+        .get()
+        .await()
+
+    val items = mutableListOf<Item>()
+    for (document in querySnapshot.documents) {
+        val itemId = document.id
+        val itemData = document.data
+
+        val item = Item(
+            itemId,
+            itemData?.get("name") as String,
+            itemData.get("released") as String,
+            itemData.get("rating") as String,
+            itemData.get("background_image") as String,
+            itemData.get("quantity") as String,
+            itemData.get("price") as String,
+        )
+        items.add(item)
+    }
+
+    return items
+}
 
 
 
