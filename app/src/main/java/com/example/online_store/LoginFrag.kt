@@ -33,7 +33,7 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if(FirebaseAuth.getInstance().currentUser!=null){
-            findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
         }
     }
 
@@ -74,8 +74,8 @@ class LoginFragment : Fragment() {
         forgotBtn.setOnClickListener {
             val builder = AlertDialog.Builder(context)
             builder.setTitle(R.string.forget.toString())
-            val view = layoutInflater.inflate(R.layout.dialog_forgot_password,null)
-            val user: EditText = view.findViewById(R.id.et_forpsw)
+            val view = layoutInflater.inflate(R.layout.fragment_forgot_pass,null)
+            val user: EditText = view.findViewById(R.id.emailEditText)
             builder.setView(view)
             builder.setPositiveButton(R.string.reset.toString(), DialogInterface.OnClickListener { _, _ ->
                 forgotPassword(user)
@@ -129,7 +129,9 @@ class LoginFragment : Fragment() {
                 task->
             if(task.isSuccessful){
                 isdialog.dismiss()
-                findNavController(binding.root).navigate(R.id.action_loginFragment_to_mainFragment)
+                findNavController(binding.root).navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
+                //findNavController(binding.root).navigate(R.id.action_loginFragment_to_customer_Fragment_buy)
+
 
             }else{
                 isdialog.dismiss()
@@ -144,7 +146,7 @@ class LoginFragment : Fragment() {
 
 
     private fun setSignUpListener() {
-        binding.signUp.setOnClickListener { v -> findNavController(v).navigate(R.id.action_loginFragment_to_signUpFragment) }
+        binding.signUp.setOnClickListener { v -> findNavController(v).navigate(R.id.action_loginFragment_to_sign_up_fregment) }
     }
 
 

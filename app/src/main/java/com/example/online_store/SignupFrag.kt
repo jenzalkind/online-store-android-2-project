@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.FragmentSignUpBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.auth.FirebaseAuth
@@ -117,7 +119,7 @@ class SignupFrag : Fragment() {
                         Toast.makeText(context, R.string.success, Toast.LENGTH_SHORT).show()
                     }
                     isdialog.dismiss()
-                    findNavController().navigate(R.id.action_sign_up_to_all_Items_Fragment)
+                    findNavController().navigate(R.id.action_sign_up_fregment_to_customer_FireBase_AllItemsFragment)
 
                 } else {
                     isdialog.dismiss()

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/all_Items_Fragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/all_Items_Fragment"
-        android:name="com.example.online_store.All_Items_Fragment"
+        android:name="com.example.online_store.Api_All_Items_Fragment"
         android:label="fragment_all__items_"
         tools:layout="@layout/fragment_all__items_" >
         <action
@@ -21,14 +21,20 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_all_Items_Fragment"
-            app:destination="@id/all_Items_Fragment" />
-        <action
             android:id="@+id/action_loginFragment_to_sign_up_fregment"
             app:destination="@id/sign_up_fregment" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment2"
             app:destination="@id/forgotPasswordFragment2" />
+        <action
+            android:id="@+id/action_loginFragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_all_Items_Fragment"
+            app:destination="@id/all_Items_Fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
     </fragment>
 
     <fragment
@@ -38,12 +44,11 @@
         tools:layout="@layout/fragment_sign_up">
 
         <action
-            android:id="@+id/action_sign_up_to_all_Items_Fragment"
-            app:destination="@id/all_Items_Fragment" />
-
-        <action
             android:id="@+id/action_back_sign_up_to_login_Fragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_sign_up_fregment_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
     </fragment>
 
     <fragment
@@ -66,5 +71,142 @@
         <action
             android:id="@+id/action_updateProductFragment_to_all_Items_Fragment"
             app:destination="@id/all_Items_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/add_ItemFragment"
+        android:name="com.example.online_store.Add_ItemFragment"
+        android:label="add_item_layout"
+        tools:layout="@layout/add_item_layout" >
+        <action
+            android:id="@+id/action_add_ItemFragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/api_All_Items_Fragment"
+        android:name="com.example.online_store.Api_All_Items_Fragment"
+        android:label="api_fragment_all__items"
+        tools:layout="@layout/api_fragment_all__items" >
+        <action
+            android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment" />
+        <action
+            android:id="@+id/action_api_All_Items_Fragment_to_apiNew_ItemFragment"
+            app:destination="@id/apiNew_ItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detail_ItemFragment"
+        android:name="com.example.online_store.Detail_ItemFragment"
+        android:label="detail_item_layout"
+        tools:layout="@layout/detail_item_layout" >
+        <action
+            android:id="@+id/action_detail_ItemFragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fireBase_AllItemsFragment"
+        android:name="com.example.online_store.FireBase_AllItemsFragment"
+        android:label="fire_base_all_items_layout"
+        tools:layout="@layout/fire_base_all_items_layout" >
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
+            app:destination="@id/detail_ItemFragment" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_edit_ItemFragment"
+            app:destination="@id/edit_ItemFragment" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_add_ItemFragment"
+            app:destination="@id/add_ItemFragment" />
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/admin_Fragment"
+        android:name="com.example.online_store.Admin_Fragment"
+        android:label="fragment_admin"
+        tools:layout="@layout/fragment_admin" >
+        <action
+            android:id="@+id/action_admin_Fragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment" />
+        <action
+            android:id="@+id/action_admin_Fragment_to_api_All_Items_Fragment"
+            app:destination="@id/api_All_Items_Fragment" />
+        <action
+            android:id="@+id/action_admin_Fragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_ItemFragment"
+        android:name="com.example.online_store.Edit_ItemFragment"
+        android:label="fragment_edit__item"
+        tools:layout="@layout/fragment_edit__item" >
+        <action
+            android:id="@+id/action_edit_ItemFragment_to_fireBase_AllItemsFragment"
+            app:destination="@id/fireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/apiNew_ItemFragment"
+        android:name="com.example.online_store.ApiNew_ItemFragment"
+        android:label="api_new_fragment__item"
+        tools:layout="@layout/api_new_fragment_item" >
+        <action
+            android:id="@+id/action_apiNew_ItemFragment_to_api_All_Items_Fragment"
+            app:destination="@id/api_All_Items_Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainActivity32"
+        android:name="com.example.online_store.MainActivity3"
+        android:label="activity_main3"
+        tools:layout="@layout/activity_main3" />
+    <fragment
+        android:id="@+id/signInActivity"
+        android:name="com.example.online_store.SignInActivity"
+        android:label="activity_sign_in"
+        tools:layout="@layout/activity_sign_in" >
+        <action
+            android:id="@+id/action_signInActivity_to_signUpActivity"
+            app:destination="@id/signUpActivity" />
+        <action
+            android:id="@+id/action_signInActivity_to_mainActivity32"
+            app:destination="@id/mainActivity32" />
+        <action
+            android:id="@+id/action_signInActivity_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpActivity"
+        android:name="com.example.online_store.SignUpActivity"
+        android:label="activity_sign_up"
+        tools:layout="@layout/activity_sign_up" >
+        <action
+            android:id="@+id/action_signUpActivity_to_signInActivity"
+            app:destination="@id/signInActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/customer_FireBase_AllItemsFragment"
+        android:name="com.example.online_store.customer_FireBase_AllItemsFragment"
+        android:label="customer_fire_base_all_items_layout"
+        tools:layout="@layout/customer_fire_base_all_items_layout" >
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_signInActivity"
+            app:destination="@id/signInActivity" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_customer_buy_ItemsFragment"
+            app:destination="@id/customer_buy_ItemsFragment" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_sign_up_fregment"
+            app:destination="@id/sign_up_fregment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customer_buy_ItemsFragment"
+        android:name="com.example.online_store.customer_buy_ItemsFragment"
+        android:label="customer_buy_items_layout"
+        tools:layout="@layout/customer_buy_items_layout" >
+        <action
+            android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
     </fragment>
 </navigation>

@@ -27,10 +27,10 @@ class UpdateProductFragment : Fragment() {
 
         var Firestore = FirebaseAuth.getInstance()
 
-        productNameEditText = view.findViewById(R.id.productNameEditText)
+/*        productNameEditText = view.findViewById(R.id.productNameEditText)
         productPriceEditText = view.findViewById(R.id.productPriceEditText)
         updateButton = view.findViewById(R.id.updateButton)
-        deleteButton = view.findViewById(R.id.deleteButton)
+        deleteButton = view.findViewById(R.id.deleteButton)*/
 
         updateButton.setOnClickListener {
             val name = productNameEditText.text.toString()

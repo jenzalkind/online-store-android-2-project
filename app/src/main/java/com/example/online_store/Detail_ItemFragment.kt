@@ -26,21 +26,21 @@ class Detail_ItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getInt("item")?.let {
-            val item = ItemManager.items[it]
+        //arguments?.getInt("item")?.let {
+        val item = chosenItem.getGame()///ItemManager.items[it]
 
-            binding.name3.text = item.name
+        binding.name3.text = item.name
 
-            binding.released3.text = item.released
-            binding.rating3.text = item.rating
+        binding.released3.text = item.released
+        binding.rating3.text = item.rating
 
-            binding.price3.text= item.price+" $"
-            binding.quantity3.text= item.quantity+" quantity"
+        binding.price3.text= item.price+" $"
+        binding.quantity3.text= item.quantity+" quantity"
 
-            Glide.with(requireContext()).load(item.background_image).circleCrop()
-                .into(binding.backgroundImage4)
+        Glide.with(requireContext()).load(item.background_image).circleCrop()
+            .into(binding.backgroundImage4)
 
-        }
+        //}
     }
 
     override fun onDestroyView() {

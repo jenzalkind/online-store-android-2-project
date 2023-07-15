@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -45,11 +44,70 @@ class FireBase_AllItemsFragment : Fragment() {
             findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
         }
 
+        binding.fab2.setOnClickListener {
+
+            runBlocking {
+
+
+                //ItemManager.items.clear()
+                //findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
+                collectionRef.get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val batch = db.batch()
+                        val newName = "null null null null null"
+
+
+
+                        for (i in 0 until querySnapshot.size() - 1) {
+                            val document1 = querySnapshot.documents[i]
+
+                            for (k in (i + 1) until querySnapshot.size() - i) {
+                                val document = querySnapshot.documents[k]
+
+
+                                if (document.getString("name") == document1.getString("name")) {
+                                    //val documentRef = collectionRef.document(document.id)
+                                    batch.update(document.reference, "name", newName)
+
+
+                                }
+                            }
+                        }
+
+                        for (document3 in querySnapshot.documents) {
+                            if (document3.getString("name") == newName) {
+                                batch.delete(document3.reference)
+                            }
+                        }
+
+
+
+                        batch.commit()
+                            .addOnSuccessListener {
+                                // Collection cleared successfully
+                            }
+                            .addOnFailureListener { exception ->
+                                // Error occurred while clearing the collection
+                            }
+                    }
+                    .addOnFailureListener { exception ->
+                        // Error occurred while fetching documents from the collection
+                    }
+
+
+                findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_admin_Fragment)
+
+
+            }
+
+        }
+
+
         var search_list: List<Item>
         binding.searchButton.setOnClickListener{
             runBlocking {
 
-                search_list=searchItemsByName(binding.search.text.toString())
+                search_list=searchItems(binding.search.text.toString(),null,null)
                 binding.recycler.adapter =
                     FireBase_ItemAdapter(search_list, object : FireBase_ItemAdapter.ItemListener {
 
@@ -59,17 +117,21 @@ class FireBase_AllItemsFragment : Fragment() {
                                 requireContext(),
                                 "${ItemManager.items[index]}", Toast.LENGTH_SHORT
                             ).show()
+                            chosenItem.setGame(search_list[index])
+
+
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                bundleOf("item" to index)
+                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment/*,
+                                bundleOf("item" to index)*/
                             )
 
                         }
 
                         override fun onItemLongClicked(index: Int) {
+                            chosenItem.setGame(search_list[index])
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
+                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment/*,
+                                bundleOf("item" to index)*/
                             )
                         }
                     })
@@ -136,17 +198,23 @@ class FireBase_AllItemsFragment : Fragment() {
                                 requireContext(),
                                 "${ItemManager.items[index]}", Toast.LENGTH_SHORT
                             ).show()
+
+                            chosenItem.setGame(ItemManager.items[index])
+
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                bundleOf("item" to index)
+                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment/*,
+                                bundleOf("item" to index)*/
                             )
 
                         }
 
                         override fun onItemLongClicked(index: Int) {
+
+                            chosenItem.setGame(ItemManager.items[index])
+
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
+                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment/*,
+                                bundleOf("item" to index)*/
                             )
                         }
                     })
@@ -193,9 +261,7 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
-
-
-                val collectionRef = db.collection("Item")
+                //val collectionRef = db.collection("Item")
 
                 collectionRef.get()
                     .addOnSuccessListener { querySnapshot ->

@@ -3,17 +3,20 @@ package com.example.online_store
 import androidx.lifecycle.MutableLiveData
 import java.util.UUID
 
-data class Item(var id:String,
+data class customer_Item(var id:String,
                 var name: String,
                 var released: String,
                 var rating: String,
                 /*,var genres :String,,*/
                 var background_image: String,
                 var quantity : String ,
-                var price :String
+                var price :String,
+
+                var need_to_buy : String,
+                var cart :String
 
                 )
-object chosenItem {
+object chosenItem_customer {
 
     var chosenItem = MutableLiveData<Item>()
 
@@ -25,7 +28,7 @@ object chosenItem {
         return chosenItem.value!!
     }
 }
-object ItemManager {
+object ItemManager_customer {
 
     val items : MutableList<Item> = mutableListOf()
 

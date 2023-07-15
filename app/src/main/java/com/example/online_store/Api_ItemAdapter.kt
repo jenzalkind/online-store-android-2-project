@@ -9,10 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class Api_ItemAdapter(private val itemList: ArrayList<Item>) : RecyclerView.Adapter<Api_ItemAdapter.ViewHolder>(){
+class Api_ItemAdapter(
+
+    private val itemList: ArrayList<Item>,
+    private val listener : OnItemClickListener
+                      ) :
+    RecyclerView.Adapter<Api_ItemAdapter.ViewHolder>(){
     private lateinit var context: Context
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener{
         val background_image = itemView.findViewById<ImageView>(R.id.background_image4)
         val name = itemView.findViewById<TextView>(R.id.name4)
         val rating = itemView.findViewById<TextView>(R.id.rating4)
@@ -22,7 +27,28 @@ class Api_ItemAdapter(private val itemList: ArrayList<Item>) : RecyclerView.Adap
         val quantity4 = itemView.findViewById<TextView>(R.id.quantity4)
         //val genres = itemView.findViewById<TextView>(R.id.category)
 
+        init {
+            itemView.setOnClickListener(this)
+
+        }
+
+        override fun onClick(p0: View?) {
+            val position :Int= adapterPosition
+            if ( position!= RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
+
     }
+
+
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -43,8 +69,9 @@ class Api_ItemAdapter(private val itemList: ArrayList<Item>) : RecyclerView.Adap
 
         //description
 
-        Glide.with(context).load(item.background_image).into(holder.background_image)
+        Glide.with(context).load(item.background_image).circleCrop().into(holder.background_image)
     }
+
 
     override fun getItemCount(): Int {
         return itemList.size

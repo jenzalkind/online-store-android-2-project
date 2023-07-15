@@ -1,26 +1,29 @@
 package com.example.online_store
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.online_store.databinding.FragmentCustomerBuyBinding
+
+
+import com.example.online_store.databinding.CustomerFireBaseAllItemsLayoutBinding
 import com.google.firebase.firestore.FirebaseFirestore
-
-/////// FireBase buy
-
-
-class Customer_Fragment_buy : Fragment() {
+import kotlinx.coroutines.runBlocking
 
 
-    private var _binding : FragmentCustomerBuyBinding? = null
+/////// FireBase
+
+
+class customer_FireBase_AllItemsFragment : Fragment() {
+
+    private var _binding : CustomerFireBaseAllItemsLayoutBinding? = null
 
     private val binding get() = _binding!!
 
@@ -28,20 +31,73 @@ class Customer_Fragment_buy : Fragment() {
     val collectionRef = db.collection("Item")
 
 
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customers__fire_base__all_items, container, false)
+        _binding = CustomerFireBaseAllItemsLayoutBinding.inflate(inflater,container,false)
+
+        binding.fab.setOnClickListener {
+
+            //ItemManager.items.clear()
+            findNavController().navigate(R.id.action_customer_FireBase_AllItemsFragment_to_customer_buy_ItemsFragment)
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        var search_list: List<Item>
+        binding.searchButton.setOnClickListener{
+            runBlocking {
+
+                search_list=searchItems(binding.search.text.toString(),null,null)
+                binding.recycler.adapter =
+                    FireBase_ItemAdapter(search_list, object : FireBase_ItemAdapter.ItemListener {
+
+                        override fun onItemClicked(index: Int) {
+
+                            Toast.makeText(
+                                requireContext(),
+                                "${ItemManager.items[index]}", Toast.LENGTH_SHORT
+                            ).show()
+                           /* findNavController().navigate(
+                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
+                                bundleOf("item" to index)
+                            )*/
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+                        }
+
+                        override fun onItemLongClicked(index: Int) {
+                            /*findNavController().navigate(
+                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
+                                bundleOf("item" to index)
+                            )*/
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                        }
+                    })
+
+
+
+
+            }
+        }
+
+
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.getString("title")?.let {
-            Toast.makeText(requireActivity(),it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
         }
+
 
 
 
@@ -65,7 +121,7 @@ class Customer_Fragment_buy : Fragment() {
                     // Create a new Item object and add it to the list
                     val item = Item(
                         id,
-                        name,
+                        name.lowercase(),
                         released,
                         rating,
                         background_image,
@@ -77,7 +133,7 @@ class Customer_Fragment_buy : Fragment() {
                 }
 
 
-                binding.recycler2.adapter =
+                binding.recycler.adapter =
                     FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {
@@ -86,18 +142,21 @@ class Customer_Fragment_buy : Fragment() {
                                 requireContext(),
                                 "${ItemManager.items[index]}", Toast.LENGTH_SHORT
                             ).show()
-                            findNavController().navigate(
+/*                            findNavController().navigate(
                                 R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
                                 bundleOf("item" to index)
-                            )
+                            )*/
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
 
                         }
 
                         override fun onItemLongClicked(index: Int) {
-                            findNavController().navigate(
+/*                            findNavController().navigate(
                                 R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
                                 bundleOf("item" to index)
-                            )
+                            )*/
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
+
                         }
                     })
 
@@ -112,16 +171,17 @@ class Customer_Fragment_buy : Fragment() {
 
 
 
-        binding.recycler2.layoutManager = LinearLayoutManager(requireContext())
+
+
+
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(
-                ItemTouchHelper.ACTION_STATE_SWIPE,
-                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -137,7 +197,10 @@ class Customer_Fragment_buy : Fragment() {
                 var deletedItem = ItemManager.items[position].id
 
                 ItemManager.remove(viewHolder.adapterPosition)
-                binding.recycler2.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+                binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+
+
+
 
 
 
@@ -169,14 +232,19 @@ class Customer_Fragment_buy : Fragment() {
 
 
 
+
+
+
+
             }
-        }).attachToRecyclerView(binding.recycler2)
+        }).attachToRecyclerView(binding.recycler)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 
 
 }

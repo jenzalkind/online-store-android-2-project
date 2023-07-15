@@ -70,11 +70,11 @@
             android:textColorHint="@color/black_trans"
             android:padding="8dp"
             android:drawablePadding="8dp"
-            android:id="@+id/email"/>
+            android:id="@+id/emailEditText"/>
 
 
         <Button
-            android:id="@+id/signBtn"
+            android:id="@+id/resetButton"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center"

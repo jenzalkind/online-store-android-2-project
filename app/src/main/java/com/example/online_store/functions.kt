@@ -1,6 +1,5 @@
 package com.example.online_store
 
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import java.util.Random
@@ -75,7 +74,7 @@ suspend fun deleteAndAddItem(
     }
 }
 
-suspend fun searchItemsByName(partialName: String): List<Item> {
+/*suspend fun searchItems(partialName: String): List<Item> {
 
     val collectionName = "Item"
     val collectionRef = db.collection(collectionName)
@@ -105,11 +104,108 @@ suspend fun searchItemsByName(partialName: String): List<Item> {
     }
 
     return items
+}*/
+
+/*
+suspend fun searchItems(
+    partialName: String,
+    minPrice: Double?,
+    maxPrice: Double?
+): List<Item> {
+    val collectionName = "Item"
+    val collectionRef = db.collection(collectionName)
+
+    var query = collectionRef.orderBy("name")
+        .startAt(partialName.lowercase())
+        .endAt(partialName.lowercase() + "\uf8ff")
+
+    if (minPrice != null) {
+        query = query.whereGreaterThanOrEqualTo("price", minPrice)
+    }
+    query = query.whereGreaterThanOrEqualTo("price", "80")
+
+
+    if (maxPrice != null) {
+        query = query.whereLessThanOrEqualTo("price", maxPrice)
+    }
+    query = query.whereLessThanOrEqualTo("price", 100)
+
+    val querySnapshot = query.get().await()
+
+    val items = mutableListOf<Item>()
+    for (document in querySnapshot.documents) {
+        val itemId = document.id
+        val itemData = document.data
+
+        val item = Item(
+            itemId,
+            itemData?.get("name") as String,
+            itemData.get("released") as String,
+            itemData.get("rating") as String,
+            itemData.get("background_image") as String,
+            itemData.get("quantity") as String,
+            itemData.get("price") as String,
+        )
+        items.add(item)
+    }
+
+    return items
+}
+*/
+
+
+
+suspend fun searchItems(
+    partialName: String,
+    minPrice: String?,
+    maxPrice: String?
+): List<Item> {
+    val collectionName = "Item"
+    val collectionRef = db.collection(collectionName)
+
+    var query = collectionRef.orderBy("name")
+        .startAt(partialName.lowercase())
+        .endAt(partialName.lowercase() + "\uf8ff")
+
+    val querySnapshot = query.get().await()
+
+    val items = mutableListOf<Item>()
+    for (document in querySnapshot.documents) {
+        val itemId = document.id
+        val itemData = document.data
+
+        val itemPrice = itemData?.get("price") as? String
+        if (itemPrice != null && isWithinPriceRange(itemPrice, minPrice, maxPrice)) {
+            val item = Item(
+                itemId,
+                itemData["name"] as String,
+                itemData["released"] as String,
+                itemData["rating"] as String,
+                itemData["background_image"] as String,
+                itemData["quantity"] as String,
+                itemData["price"] as String,
+            )
+            items.add(item)
+        }
+    }
+
+    return items
 }
 
-
-
-
+private fun isWithinPriceRange(price: String, minPrice: String?, maxPrice: String?): Boolean {
+    if (minPrice != null && minPrice!=""&& price!="") {
+        if ( price.toInt() < minPrice.toInt())
+        {
+            return false
+        }
+    }
+    if (maxPrice != null && maxPrice!="" && price!="" ) {
+        if ( price.toInt() > maxPrice.toInt()) {
+            return false
+        }
+    }
+    return true
+}
 
 
 

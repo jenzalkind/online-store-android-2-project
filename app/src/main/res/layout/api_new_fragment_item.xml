@@ -5,31 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Edit_ItemFragment"
+    tools:context=".ApiNew_ItemFragment"
     android:padding="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <TextView
+        android:id="@+id/name20"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/name2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter item Title" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/image_btn"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="Pick Image" />
+        android:text="name"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:padding="10dp"
+        />
+
 
     <ImageView
-        android:id="@+id/result_image"
+        android:id="@+id/result_image20"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
@@ -43,9 +34,10 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/quantity2"
+            android:id="@+id/quantity20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:hint="quantity" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,41 +49,44 @@
         android:layout_marginTop="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/price2"
+            android:id="@+id/price20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:hint="price" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <TextView
+        android:id="@+id/rating20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:text="rating"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:padding="10dp"
+        />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/rating2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="rating" />
-    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/date_btn20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:padding="10dp"
+
+        />
+
 
     <Button
-        android:id="@+id/date_btn"
+        android:id="@+id/Add20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="pick date"
-        app:cornerRadius="30dp" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="save" />
+        android:text="Add" />
 
 
 </LinearLayout>
