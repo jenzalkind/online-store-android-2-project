@@ -27,10 +27,10 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
     private var _binding : ApiFragmentAllItemsBinding?=null
     private val binding get() = _binding!!
 
-
+    //f648ac0ab26c4a3b9dc164acf7773f57
 
     var itemList = arrayListOf<Item>()
-    val apiSample2 = "https://api.rawg.io/api/games?key=aec8bf799fee4ab8bdff28649a063f72&page=1"
+    val apiSample2 = "https://api.rawg.io/api/games?key=f648ac0ab26c4a3b9dc164acf7773f57&page=1"
     var recyclerView: RecyclerView? = null
 
     var apiSample3="https://api.rawg.io/api/games?key=aec8bf799fee4ab8bdff28649a063f72&search="
