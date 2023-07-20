@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 import com.example.online_store.databinding.CustomerFireBaseAllItemsLayoutBinding
+import com.example.online_store.total.total_
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -86,54 +87,62 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
 
         binding.fab3.setOnClickListener {
-            if (userEmail != null) {
+            runBlocking {
+                if (userEmail != null) {
 
-                val collectionRef = db.collection(userEmail)
+                    mony = 0
+                    val collectionRef = db.collection(userEmail)
 
-                var sum= 0
-                collectionRef.get()
-                    .addOnSuccessListener { querySnapshot ->
-                        val batch = db.batch()
-                        for (document in querySnapshot.documents) {
+                    var sum = 0
+                    collectionRef.get()
+                        .addOnSuccessListener { querySnapshot ->
+                            val batch = db.batch()
+                            for (document in querySnapshot.documents) {
 
 
-                            if (document.getString("state") == "cart") {
+                                if (document.getString("state") == "cart") {
 
-                                try {
-                                    var price= document.getString("price")
-                                    var quantity =document.getString("quantity")
-                                    if(price?.toInt()!=null) {
-                                        if (quantity != null) {
-                                            sum = price.toInt() * quantity.toInt()
-                                            mony += sum
+                                    try {
+                                        var price = document.getString("price")
+                                        var quantity = document.getString("quantity")
+                                        if (price?.toInt() != null) {
+                                            if (quantity != null) {
+                                                sum = price.toInt() * quantity.toInt()
+                                                mony += sum
+                                            }
+
                                         }
+                                    } catch (_: ArithmeticException) {
 
                                     }
-                                } catch (_: ArithmeticException) {
-
                                 }
+
+
                             }
 
-
+                            batch.commit()
+                                .addOnSuccessListener {
+                                    // Collection cleared successfully
+                                }
+                                .addOnFailureListener { exception ->
+                                    // Error occurred while clearing the collection
+                                }
+                        }
+                        .addOnFailureListener { exception ->
+                            // Error occurred while fetching documents from the collection
                         }
 
-                        batch.commit()
-                            .addOnSuccessListener {
-                                // Collection cleared successfully
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
-                    }
+                }
 
+                total_.value= mony.toString()
+
+                //showSimpleDialog()
+
+                findNavController().navigate(
+                    R.id.action_customer_FireBase_AllItemsFragment_to_the_purchase_Fragment/*,
+                    bundleOf("mony" to mony)*/
+                )
             }
-
-
-
-            showSimpleDialog()
         }
 
 
@@ -492,7 +501,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
     }
 
 
-    private fun showSimpleDialog() {
+    /*private fun showSimpleDialog() {
         val builder = AlertDialog.Builder(requireContext())
 
         builder.setTitle("Purchase")
@@ -508,7 +517,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
         val dialog = builder.create()
         dialog.show()
-    }
+    }*/
 
 
 }

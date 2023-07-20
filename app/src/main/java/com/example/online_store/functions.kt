@@ -201,36 +201,6 @@ suspend fun searchItems_customer(
 
 
 
-/*if (userEmail != null)
-{
-
-
-    val itemList = listOf(
-        customer_Item("id1", "Item 1", "2023-01-01", "5", "image1.jpg", "1", "10", "cart"),
-        customer_Item("id2", "Item 2", "2023-02-01", "4", "image2.jpg", "2", "20", "cart"),
-        // Add more items as needed
-    )
-
-    for (i in itemList.indices) {
-        db.collection(userEmail).add(itemList[i]).addOnSuccessListener {
-            Log.d(tag, "yes${i}")
-        }.addOnFailureListener()
-        {
-            Log.d(tag, "no${i}")
-
-        }
-    }
-    var collectionRef = db.collection(userEmail)
-
-
-    val searchResults: List<customer_Item> =
-        searchItemsByPartialNameAndState(collectionRef, null, "cart")
-    ALL_ItemManager_customer = searchResults.toMutableList()
-
-}*/
-
-
-
 
 
 

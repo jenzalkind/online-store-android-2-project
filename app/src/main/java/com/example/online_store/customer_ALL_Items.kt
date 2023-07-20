@@ -10,30 +10,17 @@ data class customer_ALL_Items(
     var customer_Items : List<customer_Item>,
 
                 )
-/*
-object chosen_ALL_Item_customer {
+object total {
 
-    var chosenItem = MutableLiveData<Item>()
+    var total_ = MutableLiveData<String>()
 
-    fun setGame(item: Item) {
-        chosenItem.value = item
+    fun setGame(total: String) {
+        total_.value = total
     }
 
-    fun getGame():Item {
-        return chosenItem.value!!
+    fun getGame():String {
+        return total_.value!!
     }
-}*/
-/*object ALL_ItemManager_customer {
-
-    val customer_items : MutableList<customer_Item> = mutableListOf()
-
-    fun add(customer_item: customer_Item) {
-        customer_items.add(customer_item)
-    }
-
-    fun remove(index:Int) {
-        customer_items.removeAt(index)
-    }
-}*/
+}
 
 
