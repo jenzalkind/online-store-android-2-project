@@ -48,4 +48,7 @@
     <string name="date">Date</string>
     <string name="min">Minimun price</string>
     <string name="max">Maximum price</string>
+    <string name="game_image">Game image</string>
+    <string name="released">Released</string>
+    <string name="game_name">Game name</string>
 </resources>

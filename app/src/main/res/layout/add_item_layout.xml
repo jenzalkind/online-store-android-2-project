@@ -4,18 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage_background"
+    android:background="@drawable/white_background"
     android:orientation="vertical"
     android:padding="5dp"
     tools:context=".Add_ItemFragment">
-
-    <LinearLayout
-        android:id="@+id/login_tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/white_rectangle"
-        android:gravity="center"
-        android:orientation="vertical">
 
         <!-- Enter item title -->
         <LinearLayout
@@ -123,5 +115,4 @@
             android:backgroundTint="@color/button_color"
             android:text="@string/finish" />
 
-    </LinearLayout>
 </ScrollView>
