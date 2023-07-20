@@ -6,23 +6,36 @@
     android:layout_height="match_parent"
     android:background="@drawable/homepage_background"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="5dp"
     tools:context=".Admin_Fragment">
 
     <LinearLayout
-        android:id="@+id/login_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/white_rectangle"
         android:gravity="center"
         android:orientation="vertical">
 
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/admin_page"
+            android:textColor="@color/black"
+            android:fontFamily="@font/linoleo"
+            android:textSize="70sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="50dp"/>
+
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
-            android:text="add/clear  All"
+            android:layout_marginBottom="34dp"
+            android:backgroundTint="@color/button_color"
+            android:text="@string/add_clear_all"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -33,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="see and edit"
+            android:backgroundTint="@color/button_color"
+            android:text="@string/see_and_edit"
             app:layout_constraintBottom_toTopOf="@+id/button3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

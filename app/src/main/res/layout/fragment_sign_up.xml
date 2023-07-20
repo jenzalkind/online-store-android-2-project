@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/homepage_background"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:id="@+id/fragment_signup">
+    android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="51"/>
+        android:layout_weight="51" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:orientation="horizontal"
-        android:layoutDirection="ltr">
+        android:layoutDirection="ltr"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/arrowback"
@@ -25,7 +26,8 @@
             android:layout_gravity="top"
             android:layout_margin="30dp"
             android:foregroundGravity="center"
-            android:src="@drawable/ic_baseline_arrow_back_24" />
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:contentDescription="@string/back" />
 
         <ImageView
             android:id="@+id/icon"
@@ -33,39 +35,41 @@
             android:layout_height="123dp"
             android:layout_gravity="bottom"
             android:gravity="center"
-            android:src="@drawable/text_logo" />
+            android:src="@drawable/text_logo"
+            android:contentDescription="@string/app_name" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/login_tab"
         android:layout_width="275dp"
         android:layout_height="320dp"
-        android:id="@+id/login_tab"
-        android:gravity="center"
         android:background="@drawable/white_rectangle"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/linoleo"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/sign_up"
             android:textColor="@color/black"
-            android:fontFamily="@font/linoleo"
             android:textSize="50sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="3">
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight=".19"/>
+                android:layout_weight=".19" />
 
             <EditText
                 android:id="@+id/fName"
@@ -82,64 +86,66 @@
                 android:textSize="12sp"/>
 
             <EditText
+                android:id="@+id/lName"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_weight="1.31"
                 android:layout_margin="5dp"
-                android:background="@drawable/signup_textview"
                 android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:hint="@string/last_name"
-                android:textColorHint="@color/black_trans"
-                android:padding="8dp"
+                android:layout_weight="1.31"
+                android:background="@drawable/signup_textview"
                 android:drawablePadding="8dp"
-                android:id="@+id/lName"/>
+                android:hint="@string/last_name"
+                android:padding="8dp"
+                android:textColorHint="@color/black_trans"
+                android:textSize="12sp"
+                android:importantForAutofill="no"
+                tools:ignore="TextFields" />
 
         </LinearLayout>
 
         <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/signup_textview"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"
-            android:hint="@string/email"
-            android:textColorHint="@color/black_trans"
-            android:padding="8dp"
             android:drawablePadding="8dp"
-            android:id="@+id/email"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/signup_textview"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
-                android:hint="@string/password"
-                android:textColorHint="@color/black_trans"
-                android:padding="8dp"
-                android:drawablePadding="8dp"
-                android:id="@+id/password"
-                android:inputType="textPassword"/>
+            android:hint="@string/email"
+            android:padding="8dp"
+            android:textColorHint="@color/black_trans"
+            android:textSize="12sp" />
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/signup_textview"
-            android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            android:hint="@string/confirm_password"
-            android:textColorHint="@color/black_trans"
-            android:padding="8dp"
             android:drawablePadding="8dp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColorHint="@color/black_trans"
+            android:textSize="12sp" />
+
+        <EditText
             android:id="@+id/cnfPassword"
-            android:inputType="textPassword"/>
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/signup_textview"
+            android:drawablePadding="8dp"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColorHint="@color/black_trans"
+            android:textSize="12sp" />
 
 
         <Button
@@ -155,12 +161,12 @@
             android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="324"/>
+        android:layout_weight="324" />
 </LinearLayout>

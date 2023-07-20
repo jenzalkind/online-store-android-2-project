@@ -51,4 +51,11 @@
     <string name="game_image">Game image</string>
     <string name="released">Released</string>
     <string name="game_name">Game name</string>
+    <string name="buy">Buy</string>
+    <string name="to_the_wishlist">To the wishlist</string>
+    <string name="add_clear_all">Add/Clear items from API</string>
+    <string name="see_and_edit">See/Edit items from Firebase</string>
+    <string name="admin_page">Admin page</string>
+    <string name="remove_duplicates">Remove duplicates</string>
+    <string name="back">Back</string>
 </resources>

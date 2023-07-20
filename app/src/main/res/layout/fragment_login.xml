@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/homepage_background"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:id="@+id/fragment_login">
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="51"/>
+        android:layout_weight="51" />
 
     <ImageView
+        android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="123dp"
-        android:id="@+id/icon"
-        android:src="@drawable/text_logo"/>
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/text_logo" />
 
     <LinearLayout
+        android:id="@+id/login_tab"
         android:layout_width="275dp"
         android:layout_height="300dp"
-        android:id="@+id/login_tab"
         android:background="@drawable/white_rectangle"
         android:orientation="vertical">
 
         <TextView
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/linoleo"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/login"
             android:textColor="@color/black"
-            android:fontFamily="@font/linoleo"
             android:textSize="50sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/usernameLoginET"
@@ -51,7 +52,7 @@
             android:hint="@string/email"
             android:padding="10dp"
             android:textColorHint="@color/black_trans"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/passwordLoginET"
@@ -66,8 +67,9 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:textColorHint="@color/black_trans"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/loginBtn"
@@ -82,7 +84,7 @@
             android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,21 +101,15 @@
                 android:text="@string/register"
                 android:textColor="@color/button_color"
                 android:textSize="11sp"
-                android:textStyle="bold"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="324"/>
+        android:layout_weight="324" />
 
 </LinearLayout>
