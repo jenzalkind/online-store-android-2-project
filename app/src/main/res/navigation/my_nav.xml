@@ -143,6 +143,15 @@
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_sign_up_fregment"
+            app:destination="@id/sign_up_fregment" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_edit_Item"
+            app:destination="@id/buying_edit_Item" />
+        <action
+            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_Item"
+            app:destination="@id/buying_Item" />
     </fragment>
 
     <!-- Buy items -->
@@ -153,6 +162,27 @@
         tools:layout="@layout/customer_buy_items_layout">
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
+        <action
+            android:id="@+id/action_customer_buy_ItemsFragment_to_buying_Item"
+            app:destination="@id/buying_Item" />
+    </fragment>
+    <fragment
+        android:id="@+id/buying_Item"
+        android:name="com.example.online_store.Buying_Item"
+        android:label="buying_item_layout"
+        tools:layout="@layout/buying_item_layout" >
+        <action
+            android:id="@+id/action_buying_Item_to_customer_FireBase_AllItemsFragment"
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buying_edit_Item"
+        android:name="com.example.online_store.Buying_edit_Item"
+        android:label="buying_edit_item_layout"
+        tools:layout="@layout/buying_edit_item_layout" >
+        <action
+            android:id="@+id/action_buying_edit_Item_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment" />
     </fragment>
 
