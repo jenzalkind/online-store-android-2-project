@@ -1,6 +1,5 @@
-<resources>
-    <string name="app_name">online-store</string>
-    <!-- TODO: Remove or change this placeholder text -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Game Hub</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Log in</string>
     <string name="email">Email</string>
@@ -12,6 +11,7 @@
     <string name="last_name">Last name</string>
     <string name="confirm_password">Confirm password</string>
     <string name="sign_up">Sign up</string>
+    <string name="new_item">Name</string>
     <string name="forgott_pass">Forgot password?</string>
     <string name="reset_password">Reset password</string>
     <string name="warning1">Please enter your email</string>
@@ -26,7 +26,7 @@
     <string name="reset" />
     <string name="close" />
     <string name="sent" />
-    <string name="loading" />
+    <string name="loading">Loading…</string>
     <string name="filter">Filter</string>
     <string name="choose_wanted_categories">Choose wanted categories</string>
     <string name="mark_all">Mark all</string>
@@ -35,4 +35,17 @@
     <string name="type2">Bellow 50$</string>
     <string name="delete">Delete</string>
     <string name="create">Create</string>
+    <string name="add_all">Add all</string>
+    <string name="search">Search</string>
+    <string name="enter_item_title">Enter item title</string>
+    <string name="pick_image">Pick image</string>
+    <string name="rating">Rating</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="Pick_date">pick date</string>
+    <string name="finish">Click to finish</string>
+    <string name="add">Add</string>
+    <string name="date">Date</string>
+    <string name="min">Minimun price</string>
+    <string name="max">Maximum price</string>
 </resources>
