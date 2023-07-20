@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -108,8 +109,19 @@ class FireBase_AllItemsFragment : Fragment() {
             runBlocking {
 
                 search_list=searchItems(binding.search.text.toString(),null,null)
+
+                ItemManager.items.clear()
+
+                for (item in search_list)
+                {
+
+
+                    ItemManager.add(item)
+
+                }
+
                 binding.recycler.adapter =
-                    FireBase_ItemAdapter(search_list, object : FireBase_ItemAdapter.ItemListener {
+                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {
 
@@ -117,21 +129,22 @@ class FireBase_AllItemsFragment : Fragment() {
                                 requireContext(),
                                 "${ItemManager.items[index]}", Toast.LENGTH_SHORT
                             ).show()
-                            chosenItem.setGame(search_list[index])
+                            chosenItem.setGame(ItemManager.items[index])
 
 
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment/*,
-                                bundleOf("item" to index)*/
+                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
+                                bundleOf("item" to index)
                             )
+
 
                         }
 
                         override fun onItemLongClicked(index: Int) {
-                            chosenItem.setGame(search_list[index])
+                            chosenItem.setGame(ItemManager.items[index])
                             findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment/*,
-                                bundleOf("item" to index)*/
+                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
+                                bundleOf("item" to index)
                             )
                         }
                     })
@@ -158,76 +171,80 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
-        ItemManager.items.clear()
-        collectionRef.get()
-            .addOnSuccessListener { querySnapshot ->
-                val itemList = ArrayList<Item>()
-
-                for (document in querySnapshot.documents) {
-                    // Map the document fields to your Item data class
-                    val id = document.getString("id") ?: ""
-                    val name = document.getString("name") ?: ""
-                    val released = document.getString("released") ?: ""
-                    val rating = document.getString("rating") ?: ""
-                    val background_image = document.getString("background_image") ?: ""
-                    val quantity = document.getString("quantity") ?: ""
-                    val price = document.getString("price") ?: ""
+        runBlocking {
 
 
-                    // Create a new Item object and add it to the list
-                    val item = Item(
-                        id,
-                        name.lowercase(),
-                        released,
-                        rating,
-                        background_image,
-                        quantity,
-                        price
-                    )
+            ItemManager.items.clear()
+            collectionRef.get()
+                .addOnSuccessListener { querySnapshot ->
+                    val itemList = ArrayList<Item>()
 
-                    ItemManager.add(item)
+                    for (document in querySnapshot.documents) {
+                        // Map the document fields to your Item data class
+                        val id = document.getString("id") ?: ""
+                        val name = document.getString("name") ?: ""
+                        val released = document.getString("released") ?: ""
+                        val rating = document.getString("rating") ?: ""
+                        val background_image = document.getString("background_image") ?: ""
+                        val quantity = document.getString("quantity") ?: ""
+                        val price = document.getString("price") ?: ""
+
+
+                        // Create a new Item object and add it to the list
+                        val item = Item(
+                            id,
+                            name.lowercase(),
+                            released,
+                            rating,
+                            background_image,
+                            quantity,
+                            price
+                        )
+
+                        ItemManager.add(item)
+                    }
+
+
+                    binding.recycler.adapter =
+                        FireBase_ItemAdapter(
+                            ItemManager.items,
+                            object : FireBase_ItemAdapter.ItemListener {
+
+                                override fun onItemClicked(index: Int) {
+
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "${ItemManager.items[index]}", Toast.LENGTH_SHORT
+                                    ).show()
+
+                                    chosenItem.setGame(ItemManager.items[index])
+
+                                    findNavController().navigate(
+                                        R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
+                                        bundleOf("item" to index)
+                                    )
+
+                                }
+
+                                override fun onItemLongClicked(index: Int) {
+
+                                    chosenItem.setGame(ItemManager.items[index])
+
+                                    findNavController().navigate(
+                                        R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
+                                        bundleOf("item" to index)
+                                    )
+                                }
+                            })
+
+
                 }
 
+                .addOnFailureListener { exception ->
+                    // Error occurred while retrieving the collection
+                }
 
-                binding.recycler.adapter =
-                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
-
-                        override fun onItemClicked(index: Int) {
-
-                            Toast.makeText(
-                                requireContext(),
-                                "${ItemManager.items[index]}", Toast.LENGTH_SHORT
-                            ).show()
-
-                            chosenItem.setGame(ItemManager.items[index])
-
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment/*,
-                                bundleOf("item" to index)*/
-                            )
-
-                        }
-
-                        override fun onItemLongClicked(index: Int) {
-
-                            chosenItem.setGame(ItemManager.items[index])
-
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment/*,
-                                bundleOf("item" to index)*/
-                            )
-                        }
-                    })
-
-
-
-
-            }
-
-            .addOnFailureListener { exception ->
-                // Error occurred while retrieving the collection
-            }
-
+        }
 
 
 

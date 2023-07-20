@@ -1,11 +1,15 @@
 package com.example.online_store
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -15,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Calendar
+import java.util.UUID
 
 
 class Edit_ItemFragment : Fragment() {
@@ -30,6 +35,24 @@ class Edit_ItemFragment : Fragment() {
     private var month =  c.get(Calendar.MONTH)
     private var day =  c.get(Calendar.DAY_OF_MONTH)
     var date_string=""
+
+    var imge_on=""
+
+    val collectionRef = db.collection("Item")
+
+
+
+    var the_one :Int =0
+
+    private var imageUri: Uri? = null
+
+    val pickImageLauncher : ActivityResultLauncher<Array<String>> =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) {
+            binding.resultImage.setImageURI(it)
+            requireActivity().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            imageUri = it
+        }
+
 
 
     override fun onCreateView(
@@ -66,6 +89,7 @@ class Edit_ItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getInt("item")?.let {
+            the_one =it
             val item = ItemManager.items[it]
 
 
@@ -81,101 +105,43 @@ class Edit_ItemFragment : Fragment() {
             Glide.with(requireContext()).load(item.background_image).circleCrop()
                 .into(binding.resultImage)
 
+
             date_string = binding.dateBtn.text.toString()
+
+            binding.imageBtn2.setOnClickListener {
+                pickImageLauncher.launch(arrayOf("image/*"))
+            }
 
             binding.save.setOnClickListener {
 
-                runBlocking {
-                    launch {
-                        try {
-                            deleteAndAddItem(
+                if ((imageUri==null)||(imageUri.toString()==""))
+                {
+                    imge_on=item.background_image
 
-                                item.id,
-                                binding.name2.text.toString().lowercase(),
-                                date_string,
-                                binding.rating2.text.toString(),
-                                item.background_image,
-                                binding.quantity2.text.toString(),
-                                binding.price2.text.toString()
-
-                            )
-
-
-
-                        } catch (e: Exception) {
-                            // Handle any exceptions
-                            e.printStackTrace()
-
-                        }
-                    }
                 }
+                else{
+                    imge_on=imageUri.toString()
+
+                }
+
+                val updatedItem   = Item(
+                    id= ItemManager.items[the_one].id,
+                    binding.name2.text.toString().lowercase(),
+                    binding.dateBtn.text as String,
+                    binding.rating2.text.toString(),
+                    imge_on,
+                    binding.quantity2.text.toString(),
+                    binding.price2.text.toString()
+
+
+                )
+
+                updateItemsByName(binding.name2.text.toString().lowercase(), updatedItem)
 
 
                 findNavController().navigate(R.id.action_edit_ItemFragment_to_fireBase_AllItemsFragment)
 
 
-
-
-                /*
-                var romin_id= item.id
-
-
-                val collectionRef = db.collection("Item")
-
-                collectionRef.get()
-                    .addOnSuccessListener { querySnapshot ->
-                        val batch = db.batch()
-                        for (document in querySnapshot.documents) {
-                            if(document.getString("id")==romin_id ) {
-                                batch.delete(document.reference)
-                            }
-                        }
-                        batch.commit()
-                            .addOnSuccessListener {
-                                // Collection cleared successfully
-
-
-
-                                var item  = Item(
-                                    id= romin_id,
-                                    binding.name2.text.toString(),
-                                    date_string,
-                                    binding.rating2.text.toString(),
-                                    item.background_image,
-                                    binding.quantity2.text.toString(),
-                                    binding.price2.text.toString()
-
-
-                                )
-                                ItemManager.add(item)
-
-
-
-                                db.collection("Item").add(item)
-
-                                findNavController().navigate(R.id.action_edit_AllItemsFragment_to_detailItemFragment)
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
-                    }
-
-
-                        //////////////////
-                        /////////////// need to add to fire base
-                        ///////////////
-
-
-                }
-
-
-
-
-
-     */
             }
 
         }
@@ -184,6 +150,9 @@ class Edit_ItemFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 
 
 

@@ -1,6 +1,8 @@
 package com.example.online_store
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -66,7 +68,7 @@ class Add_ItemFragment : Fragment() {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
 
 
-        binding.imageBtn.setOnClickListener {
+        binding.imageBtn2.setOnClickListener {
             pickImageLauncher.launch(arrayOf("image/*"))
         }
 
@@ -123,18 +125,21 @@ class Add_ItemFragment : Fragment() {
                 binding.price2.text.toString()
 
 
-
-
-
             )
-            ItemManager.add(item)
+
+            if (binding.name2.text.toString().lowercase()=="") {
+                showSimpleDialog()
+            }
+            else {
+                ItemManager.add(item)
 
 
 
-            db.collection("Item").add(item)
+                db.collection("Item").add(item)
 
 
-            findNavController().navigate(R.id.action_add_ItemFragment_to_fireBase_AllItemsFragment)
+                findNavController().navigate(R.id.action_add_ItemFragment_to_fireBase_AllItemsFragment)
+            }
 
         }
 
@@ -159,8 +164,24 @@ class Add_ItemFragment : Fragment() {
     }
 
 
+    private fun showSimpleDialog() {
+        val builder = AlertDialog.Builder(requireContext())
 
+        builder.setTitle("error")
+        builder.setMessage("the game must have name")
 
+        builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            // Do something when the user clicks the "OK" button (optional)
+        }
+
+        // If you want to handle a negative button (optional)
+        /*builder.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
+            // Do something when the user clicks the "Cancel" button (optional)
+        }*/
+
+        val dialog = builder.create()
+        dialog.show()
+    }
 
 
 }

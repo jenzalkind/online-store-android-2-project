@@ -7,7 +7,6 @@ data class Item(var id:String,
                 var name: String,
                 var released: String,
                 var rating: String,
-                /*,var genres :String,,*/
                 var background_image: String,
                 var quantity : String ,
                 var price :String

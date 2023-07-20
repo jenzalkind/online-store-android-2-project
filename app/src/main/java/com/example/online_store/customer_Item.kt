@@ -12,20 +12,19 @@ data class customer_Item(var id:String,
                 var quantity : String ,
                 var price :String,
 
-                var need_to_buy : String,
-                var cart :String
+                var state : String
 
                 )
 object chosenItem_customer {
 
-    var chosenItem = MutableLiveData<Item>()
+    var chosenItem_customer = MutableLiveData<customer_Item>()
 
-    fun setGame(item: Item) {
-        chosenItem.value = item
+    fun setGame(customer_Item: customer_Item) {
+        chosenItem_customer.value = customer_Item
     }
 
-    fun getGame():Item {
-        return chosenItem.value!!
+    fun getGame():customer_Item {
+        return chosenItem_customer.value!!
     }
 }
 object ItemManager_customer {

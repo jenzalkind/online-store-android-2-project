@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 
 import com.example.online_store.databinding.CustomerBuyItemsLayoutBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,21 +39,15 @@ class customer_buy_ItemsFragment : Fragment() {
     ): View? {
         _binding = CustomerBuyItemsLayoutBinding.inflate(inflater,container,false)
 
-        binding.fab.setOnClickListener {
+        //binding.fab.setOnClickListener {
 
             //ItemManager.items.clear()
 /*
             findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
 */
-        }
+       // }
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        fun stringToNumber(input: String): Double? {
-            return input.toDoubleOrNull()
-        }
-
-        var min = stringToNumber(binding.min.text.toString())
-        var max = stringToNumber(binding.max.text.toString())
 
         var search_list: List<Item>
 
@@ -61,8 +57,19 @@ class customer_buy_ItemsFragment : Fragment() {
 
 
                 search_list=searchItems(binding.search.text.toString(),binding.min.text.toString(),binding.max.text.toString())
+
+                ItemManager.items.clear()
+
+                for (item in search_list)
+                {
+
+
+                    ItemManager.add(item)
+
+                }
+
                 binding.recycler.adapter =
-                    FireBase_ItemAdapter(search_list, object : FireBase_ItemAdapter.ItemListener {
+                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {
 
@@ -70,12 +77,13 @@ class customer_buy_ItemsFragment : Fragment() {
                                 requireContext(),
                                 "${ItemManager.items[index]}", Toast.LENGTH_SHORT
                             ).show()
-                           /* findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
+                            findNavController().navigate(
+                                R.id.action_customer_buy_ItemsFragment_to_buying_Item,
                                 bundleOf("item" to index)
-                            )*/
+                            )
                             ///////////////////////////////////////////////////////////////////////////////////////////////
 
+                            //TODO buy item !VVV!
 
                         }
 
@@ -85,6 +93,8 @@ class customer_buy_ItemsFragment : Fragment() {
                                 bundleOf("item" to index)
                             )*/
                             ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                            //TODO item detail maybe can connect to detail
 
                         }
                     })
@@ -109,74 +119,76 @@ class customer_buy_ItemsFragment : Fragment() {
 
 
 
+        runBlocking {
 
 
-        ItemManager.items.clear()
-        collectionRef.get()
-            .addOnSuccessListener { querySnapshot ->
-                val itemList = ArrayList<Item>()
+            ItemManager.items.clear()
+            collectionRef.get()
+                .addOnSuccessListener { querySnapshot ->
+                    val itemList = ArrayList<Item>()
 
-                for (document in querySnapshot.documents) {
-                    // Map the document fields to your Item data class
-                    val id = document.getString("id") ?: ""
-                    val name = document.getString("name") ?: ""
-                    val released = document.getString("released") ?: ""
-                    val rating = document.getString("rating") ?: ""
-                    val background_image = document.getString("background_image") ?: ""
-                    val quantity = document.getString("quantity") ?: ""
-                    val price = document.getString("price") ?: ""
-
-
-                    // Create a new Item object and add it to the list
-                    val item = Item(
-                        id,
-                        name.lowercase(),
-                        released,
-                        rating,
-                        background_image,
-                        quantity,
-                        price
-                    )
-
-                    ItemManager.add(item)
-                }
+                    for (document in querySnapshot.documents) {
+                        // Map the document fields to your Item data class
+                        val id = document.getString("id") ?: ""
+                        val name = document.getString("name") ?: ""
+                        val released = document.getString("released") ?: ""
+                        val rating = document.getString("rating") ?: ""
+                        val background_image = document.getString("background_image") ?: ""
+                        val quantity = document.getString("quantity") ?: ""
+                        val price = document.getString("price") ?: ""
 
 
-                binding.recycler.adapter =
-                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
+                        // Create a new Item object and add it to the list
+                        val item = Item(
+                            id,
+                            name.lowercase(),
+                            released,
+                            rating,
+                            background_image,
+                            quantity,
+                            price
+                        )
 
-                        override fun onItemClicked(index: Int) {
+                        ItemManager.add(item)
+                    }
 
-                            Toast.makeText(
-                                requireContext(),
-                                "${ItemManager.items[index]}", Toast.LENGTH_SHORT
-                            ).show()
-/*                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                bundleOf("item" to index)
-                            )*/
-                            ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                        }
+                    binding.recycler.adapter =
+                        FireBase_ItemAdapter(
+                            ItemManager.items,
+                            object : FireBase_ItemAdapter.ItemListener {
 
-                        override fun onItemLongClicked(index: Int) {
-/*                            findNavController().navigate(
+                                override fun onItemClicked(index: Int) {
+
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "${ItemManager.items[index]}", Toast.LENGTH_SHORT
+                                    ).show()
+                                    findNavController().navigate(
+                                        R.id.action_customer_buy_ItemsFragment_to_buying_Item,
+                                        bundleOf("item" to index)
+                                    )
+                                    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                                }
+
+                                override fun onItemLongClicked(index: Int) {
+                                    /*                            findNavController().navigate(
                                 R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
                                 bundleOf("item" to index)
                             )*/
-                            ///////////////////////////////////////////////////////////////////////////////////////////////
+                                    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                        }
-                    })
-
-
+                                }
+                            })
 
 
-            }
+                }
 
-            .addOnFailureListener { exception ->
-                // Error occurred while retrieving the collection
-            }
+                .addOnFailureListener { exception ->
+                    // Error occurred while retrieving the collection
+                }
+        }
 
 
 
@@ -207,9 +219,6 @@ class customer_buy_ItemsFragment : Fragment() {
 
                 ItemManager.remove(viewHolder.adapterPosition)
                 binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
 
 
 
@@ -246,6 +255,8 @@ class customer_buy_ItemsFragment : Fragment() {
 
 
             }
+
+
         }).attachToRecyclerView(binding.recycler)
     }
 
