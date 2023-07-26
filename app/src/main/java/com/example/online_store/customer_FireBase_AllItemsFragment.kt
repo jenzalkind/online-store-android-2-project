@@ -1,7 +1,5 @@
 package com.example.online_store
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,50 +8,43 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-
 import com.example.online_store.databinding.CustomerFireBaseAllItemsLayoutBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-
-
-/////// FireBase
-
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 
 class customer_FireBase_AllItemsFragment : Fragment() {
 
-    private var _binding : CustomerFireBaseAllItemsLayoutBinding? = null
-
+    private lateinit var firebaseAuth: FirebaseAuth
+    private var _binding: CustomerFireBaseAllItemsLayoutBinding? = null
     private val binding get() = _binding!!
 
     val db = FirebaseFirestore.getInstance()
 
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
-
-
-    var ALL_ItemManager_customer : MutableList<customer_Item> = mutableListOf()
-
+    var ALL_ItemManager_customer: MutableList<customer_Item> = mutableListOf()
     lateinit var search_list: List<customer_Item>
+
 
 
 
     var state = "cart"
 
-
-
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (activity as AppCompatActivity).supportActionBar?.title = "Game Hub"
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +52,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = CustomerFireBaseAllItemsLayoutBinding.inflate(inflater,container,false)
-
+        firebaseAuth = FirebaseAuth.getInstance()
         val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         binding.fab.setOnClickListener {
@@ -81,20 +72,12 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
         runBlocking {
             if (userEmail != null) {
-
-
                 val collectionName = userEmail
                 val partialName = ""
                 val minPrice = null
                 val maxPrice = null
-
-
-                val search_list =
-                    searchItems_customer(collectionName, partialName, minPrice, maxPrice, state)
-
-
+                val search_list = searchItems_customer(collectionName, partialName, minPrice, maxPrice, state)
                 ALL_ItemManager_customer.clear()
-
                 ALL_ItemManager_customer = search_list.toMutableList()
             }
         }
@@ -292,14 +275,14 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                             }
                             batch.commit()
                                 .addOnSuccessListener {
-                                    // Collection cleared successfully
+                                    Log.d(tag, "Collection cleared successfully")
                                 }
-                                .addOnFailureListener { exception ->
-                                    // Error occurred while clearing the collection
+                                .addOnFailureListener {
+                                    Log.d(tag, "Error occurred while clearing the collection")
                                 }
                         }
-                        .addOnFailureListener { exception ->
-                            // Error occurred while fetching documents from the collection
+                        .addOnFailureListener {
+                            Log.d(tag, "Error occurred while fetching documents from the collection")
                         }
 
 
@@ -313,9 +296,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
                         findDocumentByName(collectionPath, documentName) { documents ->
                             if (documents.isNotEmpty()) {
-                                // Document found, do something with it
                                 val document = documents[0]
-
                                 val quantity = document.getString("quantity")
                                 if (quantity != null) {
 
@@ -344,10 +325,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
 
                             } else {
-
-
-
-                                val item2  = Item(
+                                val item2 = Item(
                                     deletedItem_item.id,
                                     deletedItem_item.name,
                                     deletedItem_item.released,
@@ -355,32 +333,13 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                                     deletedItem_item.background_image,
                                     deletedItem_item.quantity,
                                     deletedItem_item.price
-
-
                                 )
                                 db.collection("Item").add(item2)
-
-
                             }
                         }
-
-
-
-
                     }
-
-
-
                 }
-
-
-
             }
-
-
-
-
-
         }).attachToRecyclerView(binding.recycler)
     }
 
@@ -389,7 +348,16 @@ class customer_FireBase_AllItemsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.logout_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logoutBtn) {
+            firebaseAuth.signOut()
+            Navigation.findNavController(binding.root).navigate(R.id.action_customer_FireBase_AllItemsFragment_to_loginFragment)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

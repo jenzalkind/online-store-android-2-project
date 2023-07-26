@@ -3,6 +3,7 @@ package com.example.online_store
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,20 +16,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Buying_Item : Fragment() {
-
     private var _binding : BuyingItemLayoutBinding?  = null
-
     private val binding get() = _binding!!
-
-
     val db = FirebaseFirestore.getInstance()
-
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
-
     lateinit var item :Item
-
     var state = "cart"
-
     var buying_quantity ="0"
 
 
@@ -49,8 +42,6 @@ class Buying_Item : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getInt("item")?.let {
-        //val item = chosenItem.getGame()///ItemManager.items[it]
-
             item = ItemManager.items[it]
 
             binding.name3.text = item.name
@@ -60,34 +51,22 @@ class Buying_Item : Fragment() {
 
             binding.price3.text= item.price+" $"
             binding.quantity3.text= item.quantity+" available"
-
-            Glide.with(requireContext()).load(item.background_image).circleCrop()
-                .into(binding.backgroundImage4)
-
+            Glide.with(requireContext()).load(item.background_image).circleCrop().into(binding.backgroundImage4)
         }
 
 
 
 
         binding.quantity8.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // This method is called before the text is changed.
-                // You can perform any pre-processing here if needed.
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // This method is called when the text is changed.
-                // Update the TextView with the new text from EditText
-
-
                 val strNumber = s.toString()
                 try {
                     var intValue: Int = strNumber.toInt()
-                    if (intValue>item.quantity.toInt())
-                    {
+                    if (intValue>item.quantity.toInt()) {
                         intValue=item.quantity.toInt()
                     }
-
                     val price_Value2: Int = item.price.toInt()
                     val sum =(intValue*price_Value2)
                     binding.cost.text =sum.toString()+"$"
@@ -100,11 +79,7 @@ class Buying_Item : Fragment() {
 
 
             }
-
-            override fun afterTextChanged(s: Editable?) {
-                // This method is called after the text has been changed.
-                // You can perform any post-processing here if needed.
-            }
+            override fun afterTextChanged(s: Editable?) { }
         })
 
 
@@ -133,16 +108,11 @@ class Buying_Item : Fragment() {
                     }
                     val intValue: Int = strNumber.toInt()
 
-                    if (intValue>item.quantity.toInt())
-                    {
-
+                    if (intValue>item.quantity.toInt()) {
                         buying_quantity=item.quantity
                     }
 
-
-
-                    if ((state=="cart" && buying_quantity!="0")||(state=="wishlist"))
-                    {
+                    if ((state=="cart" && buying_quantity!="0")||(state=="wishlist")) {
                         val customerItem  = customer_Item(
                             item.id,
                             item.name,

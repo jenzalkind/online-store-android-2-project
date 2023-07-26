@@ -8,37 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginFrag : Fragment(R.layout.fragment_login) {
+class LoginFrag : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var username: EditText
-    private lateinit var password: EditText
-    private lateinit var isdialog: AlertDialog
-    //val userEmail = FirebaseAuth.getInstance().currentUser?.email
+    private lateinit var emailInput: EditText
+    private lateinit var passwordInput: EditText
+    private lateinit var alertLoadingDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val currentEmail = FirebaseAuth.getInstance().currentUser?.email?.trim()
         super.onCreate(savedInstanceState)
-        val current_email =FirebaseAuth.getInstance().currentUser?.email?.trim()
-
-
         if (FirebaseAuth.getInstance().currentUser != null) {
-
-
-
-            when (current_email) {
-                "admin@gmail.com" ->findNavController().navigate(R.id.action_loginFragment_to_admin_Fragment)
+            when (currentEmail) {
+                "admin@gmail.com" -> findNavController().navigate(R.id.action_loginFragment_to_admin_Fragment)
                 else -> findNavController().navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
-
             }
         }
     }
@@ -46,85 +36,82 @@ class LoginFrag : Fragment(R.layout.fragment_login) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
-        username = binding.usernameLoginET
-        password = binding.passwordLoginET
+        emailInput = binding.usernameLoginET
+        passwordInput = binding.passwordLoginET
         firebaseAuth = FirebaseAuth.getInstance()
 
-        setLoginListener(binding.loginBtn)
-        setSignUpListener()
+        onClickLoginListener(binding.loginBtn)
+        onClickSignUpListener()
 
         return binding.root
     }
 
-    private fun setLoginListener(loginBtn: Button) {
-        binding.loginBtn.setOnClickListener {
+    private fun onClickLoginListener(loginBtn: Button) {
+        loginBtn.setOnClickListener {
             val builder = AlertDialog.Builder(context)
             val dialogView = layoutInflater.inflate(R.layout.loading_item, null)
+            val email = emailInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
+
             builder.setView(dialogView)
             builder.setCancelable(false)
-            isdialog = builder.create()
-            isdialog.show()
-            loginUser()
+            alertLoadingDialog = builder.create()
+
+            when {
+                TextUtils.isEmpty(email) -> {
+                    emailInput.requestFocus()
+                    emailInput.error = "Please enter your email"
+                }
+
+                TextUtils.isEmpty(password) -> {
+                    passwordInput.requestFocus()
+                    passwordInput.error = "Please enter your password"
+                }
+
+                email.isNotEmpty() && password.isNotEmpty() -> {
+                    alertLoadingDialog.show()
+                    firebaseLogin(email, password)
+                }
+            }
         }
     }
 
-    private fun loginUser() {
-        val icon = AppCompatResources.getDrawable(requireContext(), R.drawable.ic_baseline_warning)
-        icon?.setBounds(0, 0, icon.intrinsicWidth, icon.intrinsicHeight)
-        when {
-            TextUtils.isEmpty(username.text.toString().trim()) -> {
-                username.error = R.string.warning1.toString()
-            }
-            TextUtils.isEmpty(password.text.toString().trim()) -> {
-                password.error = R.string.warning2.toString()
-            }
-            username.text.toString().isNotEmpty() &&
-                    password.text.toString().isNotEmpty() -> {
-                firebaseLoginIn()
-            }
-        }
-    }
-
-    private fun firebaseLoginIn() {
+    private fun firebaseLogin(email: String, password: String) {
         binding.loginBtn.isEnabled = false
         binding.loginBtn.alpha = 0.5f
 
-        firebaseAuth.signInWithEmailAndPassword(
-            username.text.toString().trim(),
-            password.text.toString().trim()
-        ).addOnCompleteListener { task ->
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                isdialog.dismiss()
+                when (email) {
+                    "admin@gmail.com" -> {
+                        Toast.makeText(
+                            context,
+                            "Welcome Admin, have a nice day",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Navigation.findNavController(binding.root)
+                            .navigate(R.id.action_loginFragment_to_admin_Fragment)
+                    }
 
-                when (username.text.toString().trim()) {
-                    "admin@gmail.com" ->Navigation.findNavController(binding.root)
-                        .navigate(R.id.action_loginFragment_to_admin_Fragment)
                     else -> Navigation.findNavController(binding.root)
                         .navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
                 }
-
-
             } else {
-                isdialog.dismiss()
-                binding.loginBtn.isEnabled = true
-                binding.loginBtn.alpha = 1.0f
-                Toast.makeText(context, task.exception?.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Email and password don't match", Toast.LENGTH_SHORT).show()
             }
+
+            alertLoadingDialog.dismiss()
+
+            binding.loginBtn.isEnabled = true
+            binding.loginBtn.alpha = 1.0f
         }
     }
 
-    private fun setSignUpListener() {
+    private fun onClickSignUpListener() {
         binding.signUp.setOnClickListener { v ->
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_sign_up_fregment)
         }
     }
-
-
-
-
-
-
-
 }

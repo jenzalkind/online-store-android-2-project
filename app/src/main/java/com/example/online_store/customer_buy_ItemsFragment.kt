@@ -1,6 +1,7 @@
 package com.example.online_store
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +17,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.CustomerBuyItemsLayoutBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.runBlocking
-
-
-/////// FireBase
-
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseAuth
 
 class customer_buy_ItemsFragment : Fragment() {
-
+    private lateinit var firebaseAuth: FirebaseAuth
     private var _binding : CustomerBuyItemsLayoutBinding? = null
 
     private val binding get() = _binding!!
@@ -30,7 +33,10 @@ class customer_buy_ItemsFragment : Fragment() {
     val db = FirebaseFirestore.getInstance()
     val collectionRef = db.collection("Item")
 
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +44,7 @@ class customer_buy_ItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = CustomerBuyItemsLayoutBinding.inflate(inflater,container,false)
-
-
-
+        firebaseAuth = FirebaseAuth.getInstance()
         var search_list: List<Item>
 
         binding.searchButton.setOnClickListener{
@@ -56,11 +60,7 @@ class customer_buy_ItemsFragment : Fragment() {
                 search_list=searchItems(binding.search.text.toString(),min_search,max_search)
 
                 ItemManager.items.clear()
-
-                for (item in search_list)
-                {
-
-
+                for (item in search_list) {
                     ItemManager.add(item)
 
                 }
@@ -94,9 +94,6 @@ class customer_buy_ItemsFragment : Fragment() {
 
             }
         }
-
-
-
         return binding.root
     }
 
@@ -107,11 +104,7 @@ class customer_buy_ItemsFragment : Fragment() {
             Toast.makeText(requireActivity(),it,Toast.LENGTH_SHORT).show()
         }
 
-
-
         runBlocking {
-
-
             ItemManager.items.clear()
             collectionRef.get()
                 .addOnSuccessListener { querySnapshot ->
@@ -175,12 +168,6 @@ class customer_buy_ItemsFragment : Fragment() {
                     // Error occurred while retrieving the collection
                 }
         }
-
-
-
-
-
-
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
 
@@ -191,6 +178,16 @@ class customer_buy_ItemsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.logout_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logoutBtn){
+            firebaseAuth.signOut()
+            Navigation.findNavController(binding.root).navigate(R.id.action_customer_buy_ItemsFragment_to_login)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

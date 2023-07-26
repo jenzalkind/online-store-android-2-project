@@ -1,58 +1,54 @@
 package com.example.online_store
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-
 import com.example.online_store.databinding.FireBaseAllItemsLayoutBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.runBlocking
 
-
-/////// FireBase
-
-
 class FireBase_AllItemsFragment : Fragment() {
-
-    private var _binding : FireBaseAllItemsLayoutBinding? = null
-
+    private lateinit var firebaseAuth: FirebaseAuth
+    private var _binding: FireBaseAllItemsLayoutBinding? = null
     private val binding get() = _binding!!
 
     val db = FirebaseFirestore.getInstance()
     val collectionRef = db.collection("Item")
 
-
-
+    override fun onCreate(savedInstanceState: Bundle?){
+        setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FireBaseAllItemsLayoutBinding.inflate(inflater,container,false)
-
-
+        _binding = FireBaseAllItemsLayoutBinding.inflate(inflater, container, false)
+        firebaseAuth = FirebaseAuth.getInstance()
         binding.fab.setOnClickListener {
-
-            //ItemManager.items.clear()
             findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
         }
 
         binding.fab2.setOnClickListener {
 
             runBlocking {
-
-
-
                 collectionRef.get()
                     .addOnSuccessListener { querySnapshot ->
                         val batch = db.batch()
@@ -91,19 +87,14 @@ class FireBase_AllItemsFragment : Fragment() {
                                 batch.delete(document3.reference)
                             }
                         }
-
-
-
-                        batch.commit()
-                            .addOnSuccessListener {
-                                // Collection cleared successfully
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
-                            }
+                        batch.commit().addOnSuccessListener {
+                            Log.d(tag,"Collection cleared successfully")
+                        }.addOnFailureListener {
+                            Log.d(tag,"Error occurred while clearing the collection")
+                        }
                     }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
+                    .addOnFailureListener {
+                        Log.d(tag,"Error occurred while fetching documents from the collection")
                     }
 
 
@@ -116,53 +107,25 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
         var search_list: List<Item>
-        binding.searchButton.setOnClickListener{
+        binding.searchButton.setOnClickListener {
             runBlocking {
-
-                search_list=searchItems(binding.search.text.toString(),null,null)
-
+                search_list = searchItems(binding.search.text.toString(), null, null)
                 ItemManager.items.clear()
-
-                for (item in search_list)
-                {
-
-
+                for (item in search_list) {
                     ItemManager.add(item)
 
                 }
-
-                binding.recycler.adapter =
-                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
-
-                        override fun onItemClicked(index: Int) {
-
-                            Toast.makeText(
-                                requireContext(),
-                                "${ItemManager.items[index]}", Toast.LENGTH_SHORT
-                            ).show()
-                            chosenItem.setGame(ItemManager.items[index])
-
-
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                bundleOf("item" to index)
-                            )
-
-
-                        }
-
-                        override fun onItemLongClicked(index: Int) {
-                            chosenItem.setGame(ItemManager.items[index])
-                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
-                            )
-                        }
-                    })
-
-
-
-
+                binding.recycler.adapter = FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
+                    override fun onItemClicked(index: Int) {
+                        Toast.makeText(requireContext(), "${ItemManager.items[index]}", Toast.LENGTH_SHORT).show()
+                        chosenItem.setGame(ItemManager.items[index])
+                        findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment, bundleOf("item" to index))
+                    }
+                    override fun onItemLongClicked(index: Int) {
+                        chosenItem.setGame(ItemManager.items[index])
+                        findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment, bundleOf("item" to index))
+                    }
+                })
             }
         }
 
@@ -186,75 +149,32 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
             ItemManager.items.clear()
-            collectionRef.get()
-                .addOnSuccessListener { querySnapshot ->
-                    val itemList = ArrayList<Item>()
-
-                    for (document in querySnapshot.documents) {
-                        // Map the document fields to your Item data class
-                        val id = document.getString("id") ?: ""
-                        val name = document.getString("name") ?: ""
-                        val released = document.getString("released") ?: ""
-                        val rating = document.getString("rating") ?: ""
-                        val background_image = document.getString("background_image") ?: ""
-                        val quantity = document.getString("quantity") ?: ""
-                        val price = document.getString("price") ?: ""
-
-
-                        // Create a new Item object and add it to the list
-                        val item = Item(
-                            id,
-                            name.lowercase(),
-                            released,
-                            rating,
-                            background_image,
-                            quantity,
-                            price
-                        )
-
-                        ItemManager.add(item)
+            collectionRef.get().addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot.documents) {
+                    val id = document.getString("id") ?: ""
+                    val name = document.getString("name") ?: ""
+                    val released = document.getString("released") ?: ""
+                    val rating = document.getString("rating") ?: ""
+                    val background_image = document.getString("background_image") ?: ""
+                    val quantity = document.getString("quantity") ?: ""
+                    val price = document.getString("price") ?: ""
+                    val item = Item(id, name.lowercase(), released, rating, background_image, quantity, price)
+                    ItemManager.add(item)
+                }
+                binding.recycler.adapter = FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
+                    override fun onItemClicked(index: Int) {
+                        Toast.makeText(requireContext(), "${ItemManager.items[index]}", Toast.LENGTH_SHORT).show()
+                        chosenItem.setGame(ItemManager.items[index])
+                        findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment, bundleOf("item" to index))
                     }
-
-
-                    binding.recycler.adapter =
-                        FireBase_ItemAdapter(
-                            ItemManager.items,
-                            object : FireBase_ItemAdapter.ItemListener {
-
-                                override fun onItemClicked(index: Int) {
-
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "${ItemManager.items[index]}", Toast.LENGTH_SHORT
-                                    ).show()
-
-                                    chosenItem.setGame(ItemManager.items[index])
-
-                                    findNavController().navigate(
-                                        R.id.action_fireBase_AllItemsFragment_to_detail_ItemFragment,
-                                        bundleOf("item" to index)
-                                    )
-
-                                }
-
-                                override fun onItemLongClicked(index: Int) {
-
-                                    chosenItem.setGame(ItemManager.items[index])
-
-                                    findNavController().navigate(
-                                        R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                        bundleOf("item" to index)
-                                    )
-                                }
-                            })
-
-
-                }
-
-                .addOnFailureListener { exception ->
-                    // Error occurred while retrieving the collection
-                }
-
+                    override fun onItemLongClicked(index: Int) {
+                        chosenItem.setGame(ItemManager.items[index])
+                        findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment, bundleOf("item" to index))
+                    }
+                })
+            }.addOnFailureListener {
+                Log.d(tag,"Error occurred while retrieving the collection")
+            }
         }
 
 
@@ -268,35 +188,29 @@ class FireBase_AllItemsFragment : Fragment() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            ) = makeFlag(
+                ItemTouchHelper.ACTION_STATE_SWIPE,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            )
 
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                TODO("Not yet implemented")
+                TODO("")
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 val position = viewHolder.adapterPosition
-                var deletedItem = ItemManager.items[position]
-
+                val deletedItem = ItemManager.items[position]
                 ItemManager.remove(viewHolder.adapterPosition)
                 binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
-
-
                 collectionRef.get()
                     .addOnSuccessListener { querySnapshot ->
                         val batch = db.batch()
                         for (document in querySnapshot.documents) {
-
-
-
                             if(document.getString("name")==deletedItem.name )
                             {
                                 batch.delete(document.reference)
@@ -304,26 +218,15 @@ class FireBase_AllItemsFragment : Fragment() {
                         }
                         batch.commit()
                             .addOnSuccessListener {
-                                // Collection cleared successfully
+                                Log.d(tag,"Collection cleared successfully")
                             }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
+                            .addOnFailureListener {
+                                Log.d(tag,"Error occurred while clearing the collection")
                             }
                     }
                     .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
+                        Log.d(tag,"Error occurred while fetching documents from the collection")
                     }
-
-
-
-
-
-
-
-
-
-
-
             }
         }).attachToRecyclerView(binding.recycler)
     }
@@ -333,6 +236,16 @@ class FireBase_AllItemsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.logout_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logoutBtn){
+            firebaseAuth.signOut()
+            Navigation.findNavController(binding.root).navigate(R.id.action_fireBase_AllItemsFragment_to_login)
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

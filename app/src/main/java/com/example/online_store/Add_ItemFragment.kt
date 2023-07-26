@@ -19,8 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.AddItemLayoutBinding
 import java.util.Calendar
-
-
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
