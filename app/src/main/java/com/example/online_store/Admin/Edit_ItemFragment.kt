@@ -69,7 +69,7 @@ class Edit_ItemFragment : Fragment() {
 
         binding.dateBtn.setOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { view, mYear, mMonth, mDay ->
-                binding.dateBtn.text = "$mDay/" + (mMonth + 1).toString() + "/$mYear"
+                binding.dateBtn.text = "$mYear-" + (mMonth + 1).toString() + "-$mDay"
                 year = mYear
                 month = mMonth
                 day = mDay
