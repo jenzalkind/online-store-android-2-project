@@ -14,15 +14,19 @@
         <action
             android:id="@+id/action_loginFragment_to_sign_up_fregment"
             app:destination="@id/sign_up_fregment"
-            app:popUpTo="@id/sign_up_fregment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_loginFragment_to_customer_FireBase_AllItemsFragment"
-            app:destination="@id/customer_FireBase_AllItemsFragment" />
+            app:destination="@id/customer_FireBase_AllItemsFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_admin_Fragment"
-            app:destination="@id/admin_Fragment" />
+            app:destination="@id/admin_Fragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- Signup page -->
@@ -34,11 +38,13 @@
         <action
             android:id="@+id/action_back_sign_up_to_login_Fragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_sign_up_fregment_to_customer_FireBase_AllItemsFragment"
-            app:destination="@id/customer_FireBase_AllItemsFragment" />
+            app:destination="@id/customer_FireBase_AllItemsFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -62,7 +68,9 @@
         <!-- Logout -->
         <action
             android:id="@+id/action_api_All_Items_Fragment_to_login"
-            app:destination="@+id/loginFragment" />
+            app:destination="@+id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
             app:destination="@id/admin_Fragment"
@@ -95,7 +103,9 @@
         <!-- Logout -->
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_login"
-            app:destination="@+id/loginFragment" />
+            app:destination="@+id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
             app:destination="@id/detail_ItemFragment" />
@@ -127,7 +137,9 @@
         <!-- Logout -->
         <action
             android:id="@+id/action_admin_Fragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- Edit item -->
@@ -168,7 +180,9 @@
         <!-- Logout -->
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_edit_Item"
             app:destination="@id/buying_edit_Item" />
@@ -186,7 +200,9 @@
         <!-- Logout -->
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_login"
-            app:destination="@+id/loginFragment"/>
+            app:destination="@+id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment" />
