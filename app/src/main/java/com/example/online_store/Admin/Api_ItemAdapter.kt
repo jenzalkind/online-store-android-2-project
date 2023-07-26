@@ -26,8 +26,7 @@ class Api_ItemAdapter(
         val released = itemView.findViewById<TextView>(R.id.released4)
 
         val price4 = itemView.findViewById<TextView>(R.id.price4)
-        val quantity4 = itemView.findViewById<TextView>(R.id.quantity4)
-        //val genres = itemView.findViewById<TextView>(R.id.category)
+        //val quantity4 = itemView.findViewById<TextView>(R.id.quantity4)
 
         init {
             itemView.setOnClickListener(this)

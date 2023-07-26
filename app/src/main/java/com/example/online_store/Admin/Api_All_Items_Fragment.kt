@@ -112,43 +112,44 @@ class Api_All_Items_Fragment : Fragment(), Api_ItemAdapter.OnItemClickListener {
                 }
                 findNavController().navigate(R.id.action_api_All_Items_Fragment_to_admin_Fragment)
             }
-
-            binding.searchButton.setOnClickListener {
-                itemList.clear()
-                val apiSample = apiSample3 + binding.search.text
-                val reqQueue: RequestQueue = Volley.newRequestQueue(context)
-                val request = JsonObjectRequest(Request.Method.GET, apiSample, null, { res ->
-
-
-                    val jsonArray = res.getJSONArray("results")
-                    for (i in 0 until jsonArray.length()) {
-                        val jsonObj = jsonArray.getJSONObject(i)
-                        val quantity = RandomQuantity()
-                        val price = RandomPrice()
-                        val item = Item(
-                            jsonObj.getInt("id").toString(),
-                            jsonObj.getString("name").lowercase(),
-                            jsonObj.getString("released"),
-                            jsonObj.getString("rating"),
-
-                            jsonObj.getString("background_image"),
-                            quantity.toString(),
-                            price.toString()
-                        )
-                        itemList.add(item)
-                    }
-                    binding.recyclerView.layoutManager = LinearLayoutManager(context)
-                    binding.recyclerView.adapter = Api_ItemAdapter(itemList, this)
-                    Log.d("itemList", itemList.toString())
-
-
-                }, { err ->
-                    Log.d(getString(R.string.volley_sample_fail), err.message.toString())
-                })
-                reqQueue.add(request)
-                Log.d("reqQueue", reqQueue.toString())
-            }
         }
+
+        binding.searchButtonApi.setOnClickListener {
+            itemList.clear()
+            val apiSample = apiSample3 + binding.search.text
+            val reqQueue: RequestQueue = Volley.newRequestQueue(context)
+            val request = JsonObjectRequest(Request.Method.GET, apiSample, null, { res ->
+
+
+                val jsonArray = res.getJSONArray("results")
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObj = jsonArray.getJSONObject(i)
+                    val quantity = RandomQuantity()
+                    val price = RandomPrice()
+                    val item = Item(
+                        jsonObj.getInt("id").toString(),
+                        jsonObj.getString("name").lowercase(),
+                        jsonObj.getString("released"),
+                        jsonObj.getString("rating"),
+
+                        jsonObj.getString("background_image"),
+                        quantity.toString(),
+                        price.toString()
+                    )
+                    itemList.add(item)
+                }
+                binding.recyclerView.layoutManager = LinearLayoutManager(context)
+                binding.recyclerView.adapter = Api_ItemAdapter(itemList, this)
+                Log.d("itemList", itemList.toString())
+
+
+            }, { err ->
+                Log.d(getString(R.string.volley_sample_fail), err.message.toString())
+            })
+            reqQueue.add(request)
+            Log.d("reqQueue", reqQueue.toString())
+        }
+
     }
 
     //var apiSample="https://api.rawg.io/api/games?key=aec8bf799fee4ab8bdff28649a063f72&search="

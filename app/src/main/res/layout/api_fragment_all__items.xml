@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/search_button"
+            android:id="@+id/search_button_api"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/packman_orange"
