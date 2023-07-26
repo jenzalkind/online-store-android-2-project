@@ -77,7 +77,7 @@
             android:layout_margin="20dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="sum"
+            android:text="0"
             android:textSize="25dp" />
 
         <Button

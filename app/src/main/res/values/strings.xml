@@ -58,4 +58,12 @@
     <string name="admin_page">Admin page</string>
     <string name="remove_duplicates">Remove duplicates</string>
     <string name="back">Back</string>
+    <string name="there_must_be_at_least_one_game">there must be at least one game</string>
+    <string name="the_game_must_have_name">the game must have name</string>
+    <string name="error">error</string>
+    <string name="are_you_sure_you_want_the_game_to_cost_0">Are you sure you want the game to cost 0 $ ?</string>
+    <string name="check">Check</string>
+    <string name="setting_default_image">setting default image</string>
+    <string name="release_today">release today</string>
+    <string name="volley_sample_fail">Volley Sample Fail</string>
 </resources>

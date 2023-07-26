@@ -14,19 +14,15 @@
         <action
             android:id="@+id/action_loginFragment_to_sign_up_fregment"
             app:destination="@id/sign_up_fregment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/action_loginFragment_to_admin_Fragment"
-            app:destination="@id/admin_Fragment"
-            app:popUpTo="@id/admin_Fragment"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/sign_up_fregment"
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_loginFragment_to_customer_FireBase_AllItemsFragment"
-            app:destination="@id/customer_FireBase_AllItemsFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_admin_Fragment"
+            app:destination="@id/admin_Fragment" />
     </fragment>
 
     <!-- Signup page -->
@@ -39,7 +35,7 @@
             android:id="@+id/action_back_sign_up_to_login_Fragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_sign_up_fregment_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment" />
@@ -54,7 +50,7 @@
             android:id="@+id/action_add_ItemFragment_to_fireBase_AllItemsFragment"
             app:destination="@id/fireBase_AllItemsFragment"
             app:popUpTo="@id/fireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- All items API -->
@@ -67,12 +63,10 @@
             android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
             app:destination="@id/admin_Fragment"
             app:popUpTo="@id/admin_Fragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_api_All_Items_Fragment_to_apiNew_ItemFragment"
-            app:destination="@id/apiNew_ItemFragment"
-            app:popUpTo="@id/api_All_Items_Fragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/apiNew_ItemFragment" />
     </fragment>
 
     <!-- Items details -->
@@ -85,7 +79,7 @@
             android:id="@+id/action_detail_ItemFragment_to_fireBase_AllItemsFragment"
             app:destination="@id/fireBase_AllItemsFragment"
             app:popUpTo="@id/fireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- All items Firebase -->
@@ -96,22 +90,18 @@
         tools:layout="@layout/fire_base_all_items_layout">
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
-            app:destination="@id/detail_ItemFragment"
-            app:popUpTo="@id/fireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/detail_ItemFragment" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_edit_ItemFragment"
-            app:destination="@id/edit_ItemFragment"
-            app:popUpTo="@id/fireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/edit_ItemFragment" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_add_ItemFragment"
-            app:destination="@id/add_ItemFragment"
-            app:popUpTo="@id/fireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/add_ItemFragment" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_admin_Fragment"
-            app:destination="@id/admin_Fragment" />
+            app:destination="@id/admin_Fragment"
+            app:popUpTo="@id/admin_Fragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- Admin -->
@@ -125,14 +115,10 @@
             app:destination="@id/fireBase_AllItemsFragment" />
         <action
             android:id="@+id/action_admin_Fragment_to_api_All_Items_Fragment"
-            app:destination="@id/api_All_Items_Fragment"
-            app:popUpTo="@id/admin_Fragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/api_All_Items_Fragment" />
         <action
             android:id="@+id/action_admin_Fragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/admin_Fragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <!-- Edit item -->
@@ -158,7 +144,7 @@
             android:id="@+id/action_apiNew_ItemFragment_to_api_All_Items_Fragment"
             app:destination="@id/api_All_Items_Fragment"
             app:popUpTo="@id/api_All_Items_Fragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- All items Firebase customer -->
@@ -169,27 +155,13 @@
         tools:layout="@layout/customer_fire_base_all_items_layout">
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_customer_buy_ItemsFragment"
-            app:destination="@id/customer_buy_ItemsFragment"
-            app:popUpTo="@id/customer_buy_ItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/customer_buy_ItemsFragment" />
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
-        <action
-            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_sign_up_fregment"
-            app:destination="@id/sign_up_fregment" />
+            app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_edit_Item"
-            app:destination="@id/buying_edit_Item"
-            app:popUpTo="@id/customer_FireBase_AllItemsFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_Item"
-            app:destination="@id/buying_Item"
-            app:popUpTo="@id/customer_FireBase_AllItemsFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/buying_edit_Item" />
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_the_purchase_Fragment"
             app:destination="@id/the_purchase_Fragment" />
@@ -203,14 +175,10 @@
         tools:layout="@layout/customer_buy_items_layout">
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"
-            app:destination="@id/customer_FireBase_AllItemsFragment"
-            app:popUpTo="@id/customer_buy_ItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/customer_FireBase_AllItemsFragment" />
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_buying_Item"
-            app:destination="@id/buying_Item"
-            app:popUpTo="@id/customer_buy_ItemsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/buying_Item" />
     </fragment>
     <fragment
         android:id="@+id/buying_Item"
@@ -221,7 +189,7 @@
             android:id="@+id/action_buying_Item_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment"
             app:popUpTo="@id/customer_FireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/buying_edit_Item"
@@ -232,7 +200,7 @@
             android:id="@+id/action_buying_edit_Item_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment"
             app:popUpTo="@id/customer_FireBase_AllItemsFragment"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/the_purchase_Fragment"
@@ -241,7 +209,9 @@
         tools:layout="@layout/the_purchase" >
         <action
             android:id="@+id/action_the_purchase_Fragment_to_customer_FireBase_AllItemsFragment"
-            app:destination="@id/customer_FireBase_AllItemsFragment" />
+            app:destination="@id/customer_FireBase_AllItemsFragment"
+            app:popUpTo="@id/customer_FireBase_AllItemsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>
