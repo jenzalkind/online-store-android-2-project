@@ -7,7 +7,7 @@
     android:background="@drawable/white_background"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".the_purchase_Fragment">
+    tools:context=".Customer.the_purchase_Fragment">
 
     <LinearLayout
         android:id="@+id/login_tab"

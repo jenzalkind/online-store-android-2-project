@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -13,16 +13,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.online_store.databinding.FragmentAdminBinding
+import com.example.online_store.Item
+import com.example.online_store.ItemManager
+import com.example.online_store.R
+import com.example.online_store.convertToNumberOrZero
 import com.example.online_store.databinding.FragmentEditItemBinding
+import com.example.online_store.updateItemsByName
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.Calendar
-import java.util.UUID
 
 
 class Edit_ItemFragment : Fragment() {

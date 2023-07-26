@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.online_store.chosenItem
 import com.example.online_store.databinding.DetailItemLayoutBinding
 
 class Detail_ItemFragment : Fragment() {

@@ -8,7 +8,7 @@
     android:background="@drawable/white_background"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".customer_FireBase_AllItemsFragment">
+    tools:context=".Customer.customer_FireBase_AllItemsFragment">
 
     <!-- Search bar -->
     <LinearLayout

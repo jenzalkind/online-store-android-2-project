@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +8,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.FragmentAdminBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import androidx.navigation.Navigation.findNavController
+import com.example.online_store.ItemManager
+import com.example.online_store.R
 
 class Admin_Fragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth

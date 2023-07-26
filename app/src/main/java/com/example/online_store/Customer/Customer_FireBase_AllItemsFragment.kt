@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Customer
 
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +22,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import com.example.online_store.Item
+import com.example.online_store.R
+import com.example.online_store.chosenItem_customer
+import com.example.online_store.customer_Item
+import com.example.online_store.findDocumentByName
+import com.example.online_store.searchItems_customer
+import com.example.online_store.updateItemsByName
 
 class customer_FireBase_AllItemsFragment : Fragment() {
 

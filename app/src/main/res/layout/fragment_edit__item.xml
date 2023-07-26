@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".Edit_ItemFragment">
+    tools:context=".Admin.Edit_ItemFragment">
 
     <!-- Enter item title -->
     <LinearLayout

@@ -1,7 +1,6 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.online_store.Item
+import com.example.online_store.R
+import com.example.online_store.chosenItem
+import com.example.online_store.convertToNumberOrZero
 import com.example.online_store.databinding.ApiNewFragmentItemBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch

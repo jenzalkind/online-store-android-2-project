@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/add_ItemFragment"
-        android:name="com.example.online_store.Add_ItemFragment"
+        android:name="com.example.online_store.Admin.Add_ItemFragment"
         android:label="add_item_layout"
         tools:layout="@layout/add_item_layout">
         <action
@@ -62,7 +62,7 @@
     <!-- All items API -->
     <fragment
         android:id="@+id/api_All_Items_Fragment"
-        android:name="com.example.online_store.Api_All_Items_Fragment"
+        android:name="com.example.online_store.Admin.Api_All_Items_Fragment"
         android:label="api_fragment_all__items"
         tools:layout="@layout/api_fragment_all__items">
         <!-- Logout -->
@@ -84,7 +84,7 @@
     <!-- Items details -->
     <fragment
         android:id="@+id/detail_ItemFragment"
-        android:name="com.example.online_store.Detail_ItemFragment"
+        android:name="com.example.online_store.Admin.Detail_ItemFragment"
         android:label="detail_item_layout"
         tools:layout="@layout/detail_item_layout">
         <action
@@ -97,7 +97,7 @@
     <!-- All items Firebase -->
     <fragment
         android:id="@+id/fireBase_AllItemsFragment"
-        android:name="com.example.online_store.FireBase_AllItemsFragment"
+        android:name="com.example.online_store.Admin.FireBase_AllItemsFragment"
         android:label="fire_base_all_items_layout"
         tools:layout="@layout/fire_base_all_items_layout">
         <!-- Logout -->
@@ -125,7 +125,7 @@
     <!-- Admin -->
     <fragment
         android:id="@+id/admin_Fragment"
-        android:name="com.example.online_store.Admin_Fragment"
+        android:name="com.example.online_store.Admin.Admin_Fragment"
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin">
         <action
@@ -145,7 +145,7 @@
     <!-- Edit item -->
     <fragment
         android:id="@+id/edit_ItemFragment"
-        android:name="com.example.online_store.Edit_ItemFragment"
+        android:name="com.example.online_store.Admin.Edit_ItemFragment"
         android:label="fragment_edit__item"
         tools:layout="@layout/fragment_edit__item">
         <action
@@ -158,7 +158,7 @@
     <!-- New item API -->
     <fragment
         android:id="@+id/apiNew_ItemFragment"
-        android:name="com.example.online_store.ApiNew_ItemFragment"
+        android:name="com.example.online_store.Admin.ApiNew_ItemFragment"
         android:label="api_new_fragment__item"
         tools:layout="@layout/api_new_fragment_item">
         <action
@@ -171,7 +171,7 @@
     <!-- All items Firebase customer -->
     <fragment
         android:id="@+id/customer_FireBase_AllItemsFragment"
-        android:name="com.example.online_store.customer_FireBase_AllItemsFragment"
+        android:name="com.example.online_store.Customer.customer_FireBase_AllItemsFragment"
         android:label="customer_fire_base_all_items_layout"
         tools:layout="@layout/customer_fire_base_all_items_layout">
         <action
@@ -194,7 +194,7 @@
     <!-- Buy items -->
     <fragment
         android:id="@+id/customer_buy_ItemsFragment"
-        android:name="com.example.online_store.customer_buy_ItemsFragment"
+        android:name="com.example.online_store.Customer.customer_buy_ItemsFragment"
         android:label="customer_buy_items_layout"
         tools:layout="@layout/customer_buy_items_layout">
         <!-- Logout -->
@@ -212,7 +212,7 @@
     </fragment>
     <fragment
         android:id="@+id/buying_Item"
-        android:name="com.example.online_store.Buying_Item"
+        android:name="com.example.online_store.Customer.Buying_Item"
         android:label="buying_item_layout"
         tools:layout="@layout/buying_item_layout" >
         <action
@@ -223,7 +223,7 @@
     </fragment>
     <fragment
         android:id="@+id/buying_edit_Item"
-        android:name="com.example.online_store.Buying_edit_Item"
+        android:name="com.example.online_store.Customer.Buying_edit_Item"
         android:label="buying_edit_item_layout"
         tools:layout="@layout/buying_edit_item_layout" >
         <action
@@ -234,7 +234,7 @@
     </fragment>
     <fragment
         android:id="@+id/the_purchase_Fragment"
-        android:name="com.example.online_store.the_purchase_Fragment"
+        android:name="com.example.online_store.Customer.the_purchase_Fragment"
         android:label="the_purchase"
         tools:layout="@layout/the_purchase" >
         <action

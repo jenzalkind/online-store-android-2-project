@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -17,6 +17,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.online_store.Item
+import com.example.online_store.ItemManager
+import com.example.online_store.R
+import com.example.online_store.convertToNumberOrZero
 import com.example.online_store.databinding.AddItemLayoutBinding
 import java.util.Calendar
 import com.google.firebase.firestore.FirebaseFirestore
@@ -124,9 +128,9 @@ class Add_ItemFragment : Fragment() {
             if (binding.name2.text.toString().lowercase()!="") {
 
 
-                val rating_add =convertToNumberOrZero(binding.rating2.text.toString())
-                val quantity_add =convertToNumberOrZero(binding.quantity2.text.toString())
-                val price_add =convertToNumberOrZero(binding.price2.text.toString())
+                val rating_add = convertToNumberOrZero(binding.rating2.text.toString())
+                val quantity_add = convertToNumberOrZero(binding.quantity2.text.toString())
+                val price_add = convertToNumberOrZero(binding.price2.text.toString())
 
 
 

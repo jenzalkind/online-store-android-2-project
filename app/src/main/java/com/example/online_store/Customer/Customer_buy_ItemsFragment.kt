@@ -1,17 +1,13 @@
-package com.example.online_store
+package com.example.online_store.Customer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 
 import com.example.online_store.databinding.CustomerBuyItemsLayoutBinding
@@ -20,8 +16,13 @@ import kotlinx.coroutines.runBlocking
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import com.example.online_store.Admin.FireBase_ItemAdapter
+import com.example.online_store.Item
+import com.example.online_store.ItemManager
+import com.example.online_store.R
+import com.example.online_store.convertToNumberOrZero
+import com.example.online_store.searchItems
 import com.google.firebase.auth.FirebaseAuth
 
 class customer_buy_ItemsFragment : Fragment() {
@@ -57,7 +58,7 @@ class customer_buy_ItemsFragment : Fragment() {
                 binding.max.setText(max_search)
 
 
-                search_list=searchItems(binding.search.text.toString(),min_search,max_search)
+                search_list= searchItems(binding.search.text.toString(),min_search,max_search)
 
                 ItemManager.items.clear()
                 for (item in search_list) {
@@ -66,7 +67,8 @@ class customer_buy_ItemsFragment : Fragment() {
                 }
 
                 binding.recycler.adapter =
-                    FireBase_ItemAdapter(ItemManager.items,
+                    FireBase_ItemAdapter(
+                        ItemManager.items,
                         object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {

@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Customer
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,7 +10,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.online_store.Item
+import com.example.online_store.R
+import com.example.online_store.chosenItem_customer
+import com.example.online_store.convertToNumberOrZero
+import com.example.online_store.customer_Item
 import com.example.online_store.databinding.BuyingEditItemLayoutBinding
+import com.example.online_store.findDocumentByName
+import com.example.online_store.updateCustomer_ItemByName
+import com.example.online_store.updateItemsByName
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -25,7 +33,7 @@ class Buying_edit_Item : Fragment() {
 
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
 
-    lateinit var item :customer_Item
+    lateinit var item : customer_Item
 
     var state = "cart"
 
@@ -53,7 +61,7 @@ class Buying_edit_Item : Fragment() {
         arguments?.getInt("item")?.let {
         //val item = chosenItem.getGame()///ItemManager.items[it]
 
-            val ss =chosenItem_customer.chosenItem_customer.value?.name
+            val ss = chosenItem_customer.chosenItem_customer.value?.name
             item = chosenItem_customer.getGame()
 
 
@@ -150,7 +158,7 @@ class Buying_edit_Item : Fragment() {
         binding.buy.setOnClickListener{
 
 
-            buying_quantity=convertToNumberOrZero(binding.quantity8.text.toString())
+            buying_quantity= convertToNumberOrZero(binding.quantity8.text.toString())
 
             if (userEmail != null) {
 

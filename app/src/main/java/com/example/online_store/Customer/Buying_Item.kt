@@ -1,9 +1,8 @@
-package com.example.online_store
+package com.example.online_store.Customer
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.online_store.Item
+import com.example.online_store.ItemManager
+import com.example.online_store.R
+import com.example.online_store.collectionRef
+import com.example.online_store.convertToNumberOrZero
+import com.example.online_store.customer_Item
 import com.example.online_store.databinding.BuyingItemLayoutBinding
+import com.example.online_store.findDocumentByName
+import com.example.online_store.updateCustomer_ItemByName
+import com.example.online_store.updateItemsByName
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -20,7 +28,7 @@ class Buying_Item : Fragment() {
     private val binding get() = _binding!!
     val db = FirebaseFirestore.getInstance()
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
-    lateinit var item :Item
+    lateinit var item : Item
     var state = "cart"
     var buying_quantity ="0"
 
@@ -94,7 +102,7 @@ class Buying_Item : Fragment() {
         binding.buy.setOnClickListener{
 
 
-            buying_quantity=convertToNumberOrZero(binding.quantity8.text.toString())
+            buying_quantity= convertToNumberOrZero(binding.quantity8.text.toString())
 
             if (userEmail != null) {
 

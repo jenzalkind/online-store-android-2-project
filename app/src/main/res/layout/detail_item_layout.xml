@@ -6,7 +6,7 @@
     android:background="@drawable/homepage_background"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".Detail_ItemFragment">
+    tools:context=".Admin.Detail_ItemFragment">
 
     <LinearLayout
         android:id="@+id/login_tab"

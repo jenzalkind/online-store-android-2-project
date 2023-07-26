@@ -1,14 +1,15 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.online_store.Item
 import com.example.online_store.databinding.ItemsBinding
 
-class Adapter_customer_FireBase_Item(val customer_Items___:List<customer_Item>, val callBack:ItemListener)
-    : RecyclerView.Adapter<Adapter_customer_FireBase_Item.ItemViewHolder>() {
+class FireBase_ItemAdapter(val items:List<Item>, val callBack: ItemListener)
+    : RecyclerView.Adapter<FireBase_ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
         fun onItemClicked(index:Int)
@@ -33,14 +34,14 @@ class Adapter_customer_FireBase_Item(val customer_Items___:List<customer_Item>, 
             return false
         }
 
-        fun bind(customer_Item:customer_Item) {
+        fun bind(item: Item) {
 
-            binding.name4.text = customer_Item.name
-            binding.released4.text = customer_Item.released
-            binding.rating4.text = customer_Item.rating
-            Glide.with(binding.root).load(customer_Item.background_image).circleCrop().into(binding.backgroundImage4)
-            binding.price4.text =customer_Item.price+" $"
-            binding.quantity4.text =customer_Item.quantity + " quantity"
+            binding.name4.text = item.name
+            binding.released4.text = item.released
+            binding.rating4.text = item.rating
+            Glide.with(binding.root).load(item.background_image).circleCrop().into(binding.backgroundImage4)
+            binding.price4.text =item.price+" $"
+            binding.quantity4.text =item.quantity + " quantity"
 
 
         }
@@ -50,9 +51,9 @@ class Adapter_customer_FireBase_Item(val customer_Items___:List<customer_Item>, 
         ItemViewHolder(ItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) =
-        holder.bind(customer_Items___[position])
+        holder.bind(items[position])
 
     override fun getItemCount() =
-        customer_Items___.size
+        items.size
 
 }

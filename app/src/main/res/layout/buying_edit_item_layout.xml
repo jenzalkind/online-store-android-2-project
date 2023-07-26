@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/white_background"
     android:padding="5dp"
-    tools:context=".Buying_edit_Item">
+    tools:context=".Customer.Buying_edit_Item">
 
     <LinearLayout
         android:layout_width="match_parent"

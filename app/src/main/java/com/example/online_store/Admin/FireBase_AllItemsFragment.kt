@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -17,7 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.online_store.Item
+import com.example.online_store.ItemManager
+import com.example.online_store.R
+import com.example.online_store.chosenItem
 import com.example.online_store.databinding.FireBaseAllItemsLayoutBinding
+import com.example.online_store.searchItems
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.runBlocking

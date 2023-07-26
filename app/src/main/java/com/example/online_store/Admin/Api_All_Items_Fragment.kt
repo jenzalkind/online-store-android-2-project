@@ -1,4 +1,4 @@
-package com.example.online_store
+package com.example.online_store.Admin
 
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -21,11 +18,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import com.example.online_store.Item
+import com.example.online_store.R
+import com.example.online_store.RandomPrice
+import com.example.online_store.RandomQuantity
+import com.example.online_store.chosenItem
 import com.google.firebase.auth.FirebaseAuth
 
-class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
+class Api_All_Items_Fragment : Fragment(), Api_ItemAdapter.OnItemClickListener {
     private lateinit var firebaseAuth: FirebaseAuth
     val fireStoreDatabase = FirebaseFirestore.getInstance()
 
