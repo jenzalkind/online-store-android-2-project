@@ -32,12 +32,14 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FireBaseAllItemsLayoutBinding.inflate(inflater,container,false)
+
 
         binding.fab.setOnClickListener {
 
@@ -50,8 +52,7 @@ class FireBase_AllItemsFragment : Fragment() {
             runBlocking {
 
 
-                //ItemManager.items.clear()
-                //findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
+
                 collectionRef.get()
                     .addOnSuccessListener { querySnapshot ->
                         val batch = db.batch()
@@ -68,6 +69,16 @@ class FireBase_AllItemsFragment : Fragment() {
 
                                 if (document.getString("name") == document1.getString("name")) {
                                     //val documentRef = collectionRef.document(document.id)
+
+                                    val quantity1= document1.getString("quantity").toString()
+                                    val quantity= document.getString("quantity").toString()
+
+                                    val quantity1_Int :Int=quantity1.toInt()
+                                    val quantity_Int :Int=quantity.toInt()
+                                    val sum =(quantity1_Int+quantity_Int).toString()
+
+                                    batch.update(document1.reference, "quantity", sum)
+
                                     batch.update(document.reference, "name", newName)
 
 
@@ -270,7 +281,7 @@ class FireBase_AllItemsFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 val position = viewHolder.adapterPosition
-                var deletedItem = ItemManager.items[position].id
+                var deletedItem = ItemManager.items[position]
 
                 ItemManager.remove(viewHolder.adapterPosition)
                 binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
@@ -278,13 +289,16 @@ class FireBase_AllItemsFragment : Fragment() {
 
 
 
-                //val collectionRef = db.collection("Item")
 
                 collectionRef.get()
                     .addOnSuccessListener { querySnapshot ->
                         val batch = db.batch()
                         for (document in querySnapshot.documents) {
-                            if(document.getString("id")==deletedItem ) {
+
+
+
+                            if(document.getString("name")==deletedItem.name )
+                            {
                                 batch.delete(document.reference)
                             }
                         }

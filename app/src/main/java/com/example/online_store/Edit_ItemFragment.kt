@@ -1,6 +1,8 @@
 package com.example.online_store
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -41,6 +44,8 @@ class Edit_ItemFragment : Fragment() {
     val collectionRef = db.collection("Item")
 
 
+    var price_add_flag =0
+
 
     var the_one :Int =0
 
@@ -72,7 +77,7 @@ class Edit_ItemFragment : Fragment() {
 
 
 
-            dpd.datePicker.minDate = c.timeInMillis
+            dpd.datePicker.maxDate = c.timeInMillis
 
 
 
@@ -114,32 +119,65 @@ class Edit_ItemFragment : Fragment() {
 
             binding.save.setOnClickListener {
 
-                if ((imageUri==null)||(imageUri.toString()==""))
-                {
-                    imge_on=item.background_image
 
+                if (binding.name2.text.toString().lowercase() != "") {
+
+
+                    if ((imageUri == null) || (imageUri.toString() == "")) {
+                        imge_on = item.background_image
+
+                    } else {
+                        imge_on = imageUri.toString()
+
+                    }
+
+                    val rating_add = convertToNumberOrZero(binding.rating2.text.toString())
+                    val quantity_add = convertToNumberOrZero(binding.quantity2.text.toString())
+                    val price_add = convertToNumberOrZero(binding.price2.text.toString())
+
+
+                    if (price_add == "0"&&price_add_flag==0) {
+                        showSimpleDialog3()
+
+                    } else {
+                        price_add_flag = 1
+                    }
+
+
+                    if (price_add_flag == 1) {
+                        if (quantity_add.toInt() >= 1) {
+                            val updatedItem = Item(
+                                id = ItemManager.items[the_one].id,
+                                binding.name2.text.toString().lowercase(),
+                                binding.dateBtn.text as String,
+                                rating_add,
+                                imge_on,
+                                quantity_add,
+                                price_add
+
+
+                            )
+
+                            updateItemsByName(
+                                binding.name2.text.toString().lowercase(),
+                                updatedItem
+                            )
+
+
+                            findNavController().navigate(R.id.action_edit_ItemFragment_to_fireBase_AllItemsFragment)
+
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.there_must_be_at_least_one_game),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    }
+                }else {
+                    showSimpleDialog()
                 }
-                else{
-                    imge_on=imageUri.toString()
-
-                }
-
-                val updatedItem   = Item(
-                    id= ItemManager.items[the_one].id,
-                    binding.name2.text.toString().lowercase(),
-                    binding.dateBtn.text as String,
-                    binding.rating2.text.toString(),
-                    imge_on,
-                    binding.quantity2.text.toString(),
-                    binding.price2.text.toString()
-
-
-                )
-
-                updateItemsByName(binding.name2.text.toString().lowercase(), updatedItem)
-
-
-                findNavController().navigate(R.id.action_edit_ItemFragment_to_fireBase_AllItemsFragment)
 
 
             }
@@ -154,6 +192,44 @@ class Edit_ItemFragment : Fragment() {
 
 
 
+
+    private fun showSimpleDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle(getString(R.string.error))
+        builder.setMessage(getString(R.string.the_game_must_have_name))
+
+        builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+        }
+
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+
+    private fun showSimpleDialog3() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle(getString(R.string.check))
+        builder.setMessage(getString(R.string.are_you_sure_you_want_the_game_to_cost_0))
+
+        builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            price_add_flag=1
+
+        }
+        // If you want to handle a negative button (optional)
+        builder.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
+            // Do something when the user clicks the "Cancel" button (optional)
+            price_add_flag=0
+        }
+
+
+
+        val dialog = builder.create()
+        dialog.show()
+    }
 
 
 

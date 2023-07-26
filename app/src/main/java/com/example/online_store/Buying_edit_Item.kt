@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -71,7 +72,7 @@ class Buying_edit_Item : Fragment() {
             findDocumentByName(collectionPath, documentName) { documents ->
                 if (documents.isNotEmpty()) {
                     // Document found, do something with it
-                    val document = documents[0] // Assuming there's only one document with the given name
+                    val document = documents[0]
 
                     val quantity = document.getString("quantity")
                     if (quantity != null) {
@@ -80,7 +81,7 @@ class Buying_edit_Item : Fragment() {
                         binding.quantity3.text=quantity
                         shop_quantity=quantity
                     }
-                    // Access document fields using document["field_name"]
+
 
 
                 } else {
@@ -120,7 +121,7 @@ class Buying_edit_Item : Fragment() {
                     val intValue: Int = strNumber.toInt()
                     val intValue2: Int = item.price.toInt()
                     val sum =(intValue*intValue2)
-                    binding.cost.text =sum.toString()+"$"
+                    binding.cost.text =sum.toString()+" $"
 
 
                 } catch (e: NumberFormatException) {
@@ -148,7 +149,9 @@ class Buying_edit_Item : Fragment() {
 
         binding.buy.setOnClickListener{
 
-            buying_quantity=binding.quantity8.text.toString()
+            //buying_quantity=binding.quantity8.text.toString()
+
+            buying_quantity=convertToNumberOrZero(binding.quantity8.text.toString())
 
             if (userEmail != null) {
 
@@ -232,25 +235,9 @@ class Buying_edit_Item : Fragment() {
 
 
 
-/*                        val item  = Item(
-                            item.id,
-                            item.name,
-                            item.released,
-                            item.rating,
-                            item.background_image,
-                            quantity_left.toString(),
-                            item.price
-
-
-                        )*/
 
 
 
-
-
-                        //db.collection(userEmail).add(customerItem)
-
-///////////////////////////////
 
 
                         val customerItem  = customer_Item(
@@ -279,9 +266,17 @@ class Buying_edit_Item : Fragment() {
                                 .addOnSuccessListener { querySnapshot ->
                                     val batch = db.batch()
                                     for (document in querySnapshot.documents) {
-                                        var vv= document.getString("id")
-                                        var vv2 =item.id
-                                        if(document.getString("id")==item.id ) {
+
+
+                                        //var vv= document.getString("id")
+                                        //var vv2 =item.id
+
+                                        //if(document.getString("id")==item.id )
+
+
+
+                                        if(document.getString("name")==item.name)
+                                        {
                                             batch.delete(document.reference)
                                         }
                                     }
@@ -304,6 +299,10 @@ class Buying_edit_Item : Fragment() {
 
                         findNavController().navigate(R.id.action_buying_edit_Item_to_customer_FireBase_AllItemsFragment)
 
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(),getString(R.string.there_must_be_at_least_one_game), Toast.LENGTH_SHORT).show()
                     }
 
 

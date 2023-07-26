@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.online_store.databinding.ThePurchaseBinding
 import com.example.online_store.total.total_
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.runBlocking
 
 class the_purchase_Fragment : Fragment() {
 
@@ -19,6 +20,8 @@ class the_purchase_Fragment : Fragment() {
     private val binding get() = _binding!!
 
 
+
+    var mony=0
 
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
 
@@ -34,14 +37,59 @@ class the_purchase_Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getInt("mony")?.let {
-            val card = it
 
 
-            binding.sum.text = total_.value.toString()
+        if (userEmail != null) {
 
+            mony = 0
+            val collectionRef = db.collection(userEmail)
+            var sum = 0
+            collectionRef.get()
+                .addOnSuccessListener { querySnapshot ->
+                    val batch = db.batch()
+                    for (document in querySnapshot.documents) {
+
+
+
+                        if (document.getString("state") == "cart") {
+
+                            try {
+                                var price = document.getString("price")
+                                var quantity = document.getString("quantity")
+                                if (price?.toInt() != null) {
+                                    if (quantity != null) {
+                                        sum = price.toInt() * quantity.toInt()
+                                        mony += sum
+
+                                        total_.value= mony.toString()
+
+                                        //showSimpleDialog()
+                                        binding.sum.text = total_.value.toString()
+
+
+                                    }
+
+                                }
+                            } catch (_: ArithmeticException) {
+
+                            }
+                        }
+
+
+                    }
+
+
+                }
+                .addOnFailureListener { exception ->
+                    // Error occurred while fetching documents from the collection
+                }
 
         }
+
+
+
+
+
         binding.agree.setOnClickListener {
 
             if (userEmail != null) {

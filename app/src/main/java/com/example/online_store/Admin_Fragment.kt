@@ -27,6 +27,7 @@ class Admin_Fragment : Fragment() {
 
 
         }
+
     }
 
 
@@ -55,42 +56,7 @@ class Admin_Fragment : Fragment() {
             ItemManager.items.clear()
 
 
-/*
-            runBlocking {
 
-
-                //ItemManager.items.clear()
-                //findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
-                collectionRef.get()
-                    .addOnSuccessListener { querySnapshot ->
-                        val batch = db.batch()
-                        val newName = "null null null null null"
-
-
-
-                        for (document3 in querySnapshot.documents) {
-                            if (document3.getString("name") == newName) {
-                                batch.delete(document3.reference)
-                            }
-                        }
-
-
-
-                        batch.commit()
-                            .addOnSuccessListener {
-                                // Collection cleared successfully
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
-                    }
-
-
-
-            }*/
             findNavController().navigate(R.id.action_admin_Fragment_to_fireBase_AllItemsFragment)
 
         }

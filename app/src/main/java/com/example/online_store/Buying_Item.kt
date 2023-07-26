@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -29,6 +30,10 @@ class Buying_Item : Fragment() {
     var state = "cart"
 
     var buying_quantity ="0"
+
+
+
+    var bought =0
 
 
     override fun onCreateView(
@@ -77,9 +82,14 @@ class Buying_Item : Fragment() {
 
                 val strNumber = s.toString()
                 try {
-                    val intValue: Int = strNumber.toInt()
-                    val intValue2: Int = item.price.toInt()
-                    val sum =(intValue*intValue2)
+                    var intValue: Int = strNumber.toInt()
+                    if (intValue>item.quantity.toInt())
+                    {
+                        intValue=item.quantity.toInt()
+                    }
+
+                    val price_Value2: Int = item.price.toInt()
+                    val sum =(intValue*price_Value2)
                     binding.cost.text =sum.toString()+"$"
 
 
@@ -108,7 +118,8 @@ class Buying_Item : Fragment() {
 
         binding.buy.setOnClickListener{
 
-            buying_quantity=binding.quantity8.text.toString()
+
+            buying_quantity=convertToNumberOrZero(binding.quantity8.text.toString())
 
             if (userEmail != null) {
 
@@ -147,7 +158,7 @@ class Buying_Item : Fragment() {
 
                         var quantity_left=item.quantity.toInt()-buying_quantity.toInt()
 
-                        val item  = Item(
+                        val item_1  = Item(
                             item.id,
                             item.name,
                             item.released,
@@ -159,11 +170,91 @@ class Buying_Item : Fragment() {
 
                         )
 
-                        db.collection(userEmail).add(customerItem)
+
+                        val documentName = item.name
+
+
+                        val collection_userEmailPath = userEmail
+
+
+                        findDocumentByName(collection_userEmailPath, documentName) { documents ->
+                            if (documents.isNotEmpty()) {
+
+                                    for (document in documents)
+                                    {
+
+
+                                        val quantity = document.getString("quantity")
+                                        val state_item = document.getString("state")
+
+                                        if (state_item!="history" ){
+                                            if (quantity != null) {
+
+
+                                                if (state == state_item)
+                                                {
+                                                    if (state_item=="cart")
+                                                    {
+                                                        var quan2 =
+                                                            buying_quantity.toInt() + quantity.toInt()
+
+                                                        val document_Item = customer_Item(
+                                                            item.id,
+                                                            item.name,
+                                                            item.released,
+                                                            item.rating,
+                                                            item.background_image,
+                                                            quan2.toString(),
+                                                            item.price,
+                                                            state
+
+
+                                                        )
+
+
+                                                        bought = 1
+                                                        updateCustomer_ItemByName(
+                                                            documentName,
+                                                            document_Item,
+                                                            userEmail
+                                                        )
+                                                    }
+                                                    if ((state_item=="wishlist"))
+                                                    {
+                                                        bought = 1
+
+                                                    }
+
+                                                }
+                                            }
+
+
+                                        }
+
+
+
+                                }
+
+                            } else {
+
+
+                                db.collection(userEmail).add(customerItem)
+
+                                bought =1
+
+                            }
+                            if ( bought ==0) {
+                                db.collection(userEmail).add(customerItem)
+                                bought =1
+                            }
+                        }
+
+
+
 
 
                         if(quantity_left>0) {
-                            updateItemsByName(customerItem.name, item)
+                            updateItemsByName(customerItem.name, item_1)
                         }
                         else
                         {
@@ -172,7 +263,7 @@ class Buying_Item : Fragment() {
                                 .addOnSuccessListener { querySnapshot ->
                                     val batch = db.batch()
                                     for (document in querySnapshot.documents) {
-                                        if(document.getString("id")==item.id ) {
+                                        if(document.getString("name")==item.name ) {
                                             batch.delete(document.reference)
                                         }
                                     }
@@ -195,6 +286,10 @@ class Buying_Item : Fragment() {
 
                         findNavController().navigate(R.id.action_buying_Item_to_customer_FireBase_AllItemsFragment)
 
+                    }
+                    else
+                    {
+                        Toast.makeText(requireContext(),getString(R.string.there_must_be_at_least_one_game), Toast.LENGTH_SHORT).show()
                     }
 
 

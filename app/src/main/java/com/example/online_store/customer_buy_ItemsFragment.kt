@@ -39,14 +39,6 @@ class customer_buy_ItemsFragment : Fragment() {
     ): View? {
         _binding = CustomerBuyItemsLayoutBinding.inflate(inflater,container,false)
 
-        //binding.fab.setOnClickListener {
-
-            //ItemManager.items.clear()
-/*
-            findNavController().navigate(R.id.action_fireBase_AllItemsFragment_to_add_ItemFragment)
-*/
-       // }
-        ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
         var search_list: List<Item>
@@ -54,9 +46,14 @@ class customer_buy_ItemsFragment : Fragment() {
         binding.searchButton.setOnClickListener{
             runBlocking {
 
+                val min_search = convertToNumberOrZero(binding.min.text.toString())
+                val max_search = convertToNumberOrZero(binding.max.text.toString())
+
+                binding.min.setText(min_search)
+                binding.max.setText(max_search)
 
 
-                search_list=searchItems(binding.search.text.toString(),binding.min.text.toString(),binding.max.text.toString())
+                search_list=searchItems(binding.search.text.toString(),min_search,max_search)
 
                 ItemManager.items.clear()
 
@@ -69,7 +66,8 @@ class customer_buy_ItemsFragment : Fragment() {
                 }
 
                 binding.recycler.adapter =
-                    FireBase_ItemAdapter(ItemManager.items, object : FireBase_ItemAdapter.ItemListener {
+                    FireBase_ItemAdapter(ItemManager.items,
+                        object : FireBase_ItemAdapter.ItemListener {
 
                         override fun onItemClicked(index: Int) {
 
@@ -81,19 +79,11 @@ class customer_buy_ItemsFragment : Fragment() {
                                 R.id.action_customer_buy_ItemsFragment_to_buying_Item,
                                 bundleOf("item" to index)
                             )
-                            ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                            //TODO buy item !VVV!
 
                         }
 
                         override fun onItemLongClicked(index: Int) {
-                            /*findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
-                            )*/
-                            ///////////////////////////////////////////////////////////////////////////////////////////////
-
                             //TODO item detail maybe can connect to detail
 
                         }
@@ -173,11 +163,7 @@ class customer_buy_ItemsFragment : Fragment() {
                                 }
 
                                 override fun onItemLongClicked(index: Int) {
-                                    /*                            findNavController().navigate(
-                                R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                bundleOf("item" to index)
-                            )*/
-                                    ///////////////////////////////////////////////////////////////////////////////////////////////
+                                    //TODO item detail maybe can connect to detail
 
                                 }
                             })
@@ -197,67 +183,7 @@ class customer_buy_ItemsFragment : Fragment() {
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        ItemTouchHelper(object : ItemTouchHelper.Callback() {
 
-            override fun getMovementFlags(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                TODO("Not yet implemented")
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-                val position = viewHolder.adapterPosition
-                var deletedItem = ItemManager.items[position].id
-
-                ItemManager.remove(viewHolder.adapterPosition)
-                binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
-                val collectionRef = db.collection("Item")
-
-                collectionRef.get()
-                    .addOnSuccessListener { querySnapshot ->
-                        val batch = db.batch()
-                        for (document in querySnapshot.documents) {
-                            if(document.getString("id")==deletedItem ) {
-                                batch.delete(document.reference)
-                            }
-                        }
-                        batch.commit()
-                            .addOnSuccessListener {
-                                // Collection cleared successfully
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while clearing the collection
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while fetching documents from the collection
-                    }
-
-
-
-
-
-
-
-
-
-
-
-            }
-
-
-        }).attachToRecyclerView(binding.recycler)
     }
 
     override fun onDestroyView() {

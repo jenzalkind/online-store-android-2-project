@@ -52,7 +52,7 @@ class Api_ItemAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.items, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.api_items, parent, false)
         return ViewHolder(view)
     }
 
@@ -63,8 +63,8 @@ class Api_ItemAdapter(
         holder.name.text = item.name
         holder.released.text = item.released
         holder.rating.text = item.rating
-        holder.price4.text = item.price
-        holder.quantity4.text = item.quantity
+        holder.price4.text = item.price+" $"
+        //holder.quantity4.text = item.quantity
 
 
         //description

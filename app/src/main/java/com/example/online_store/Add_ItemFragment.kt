@@ -2,6 +2,7 @@ package com.example.online_store
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.ContentResolver
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -56,6 +57,8 @@ class Add_ItemFragment : Fragment() {
     var date_flag =0
     var date_string=""
 
+    var price_add_flag =0
+
 
 
 
@@ -82,7 +85,7 @@ class Add_ItemFragment : Fragment() {
             //date_string
 
 
-            dpd.datePicker.minDate= c.timeInMillis
+            dpd.datePicker.maxDate= c.timeInMillis
 
 
 
@@ -101,46 +104,91 @@ class Add_ItemFragment : Fragment() {
 
 
 
-        ///////////////////////////////////////////////////////////////
+
 
 
         binding.save.setOnClickListener {
-            /*val bundle = bundleOf("title" to binding.itemTitle.text.toString(), "description" to binding.itemDescription.text.toString())
-            findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment,bundle)
-        */
+
 
             if (date_flag==0) {
-                Toast.makeText(requireContext(), "release today", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.release_today), Toast.LENGTH_SHORT).show()
                 date_string = getCurrentDate()
 
             }
 
 
-            val item  = Item(
-                id= UUID.randomUUID().toString(),
-                binding.name2.text.toString().lowercase(),
-                date_string,
-                binding.rating2.text.toString(),
-                imageUri.toString(),
-                binding.quantity2.text.toString(),
-                binding.price2.text.toString()
 
-
-            )
 
             if (binding.name2.text.toString().lowercase()=="") {
                 showSimpleDialog()
             }
-            else {
-                ItemManager.add(item)
+
+            if (binding.name2.text.toString().lowercase()!="") {
+
+
+                val rating_add =convertToNumberOrZero(binding.rating2.text.toString())
+                val quantity_add =convertToNumberOrZero(binding.quantity2.text.toString())
+                val price_add =convertToNumberOrZero(binding.price2.text.toString())
 
 
 
-                db.collection("Item").add(item)
 
 
-                findNavController().navigate(R.id.action_add_ItemFragment_to_fireBase_AllItemsFragment)
+                if (imageUri.toString()=="null") {
+                    val resourceId = R.drawable.no_game
+                    val uri = Uri.Builder()
+                        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                        .authority(resources.getResourcePackageName(resourceId))
+                        .appendPath(resources.getResourceTypeName(resourceId))
+                        .appendPath(resources.getResourceEntryName(resourceId))
+                        .build()
+                    imageUri=uri
+                    Toast.makeText(requireContext(),getString(R.string.setting_default_image), Toast.LENGTH_SHORT).show()
+                }
+
+
+                if(price_add=="0"&&price_add_flag==0)
+                {
+                    showSimpleDialog3()
+
+                }
+                else
+                {
+                    price_add_flag=1
+                }
+
+
+                if(price_add_flag==1) {
+                    if (quantity_add.toInt() >= 1) {
+                        val item = Item(
+                            id = UUID.randomUUID().toString(),
+                            binding.name2.text.toString().lowercase(),
+                            date_string,
+                            rating_add,
+                            imageUri.toString(),
+                            quantity_add,
+                            price_add
+
+
+                        )
+
+
+                        ItemManager.add(item)
+
+
+
+                        db.collection("Item").add(item)
+
+
+                        findNavController().navigate(R.id.action_add_ItemFragment_to_fireBase_AllItemsFragment)
+                    } else {
+                        Toast.makeText(requireContext(),getString(R.string.there_must_be_at_least_one_game), Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
             }
+
 
         }
 
@@ -165,24 +213,45 @@ class Add_ItemFragment : Fragment() {
     }
 
 
+
+
     private fun showSimpleDialog() {
         val builder = AlertDialog.Builder(requireContext())
 
-        builder.setTitle("error")
-        builder.setMessage("the game must have name")
+        builder.setTitle(getString(R.string.error))
+        builder.setMessage(getString(R.string.the_game_must_have_name))
 
         builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
-            // Do something when the user clicks the "OK" button (optional)
         }
 
-        // If you want to handle a negative button (optional)
-        /*builder.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
-            // Do something when the user clicks the "Cancel" button (optional)
-        }*/
 
         val dialog = builder.create()
         dialog.show()
     }
 
+
+
+
+    private fun showSimpleDialog3() {
+        val builder = AlertDialog.Builder(requireContext())
+
+        builder.setTitle(getString(R.string.check))
+        builder.setMessage(getString(R.string.are_you_sure_you_want_the_game_to_cost_0))
+
+        builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
+            price_add_flag=1
+
+        }
+        // If you want to handle a negative button (optional)
+        builder.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
+            // Do something when the user clicks the "Cancel" button (optional)
+            price_add_flag=0
+        }
+
+
+
+        val dialog = builder.create()
+        dialog.show()
+    }
 
 }

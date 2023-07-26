@@ -39,54 +39,19 @@ fun RandomPrice(): Int {
 }
 
 
-suspend fun deleteAndAddItem(
-    romin_id: String,
-    name: String,
-    released: String,
-    rating: String,
-    backgroundImage: String,
-    quantity : String,
-    price :String
-
-        ) {
-    try {
-        val collectionRef = db.collection("Item")
-
-        val querySnapshot = collectionRef.get().await()
-        val batch = db.batch()
-
-        for (document in querySnapshot.documents) {
-            if (document.getString("id") == romin_id) {
-                batch.delete(document.reference)
-            }
+fun convertToNumberOrZero(input: String): String {
+    return try {
+        val intValue = input.toInt()
+        intValue.toString() // Return the integer value as a string
+    } catch (e1: NumberFormatException) {
+        try {
+            val doubleValue = input.toDouble()
+            doubleValue.toString() // Return the double value as a string
+        } catch (e2: NumberFormatException) {
+            "0" // Return "0" as a string
         }
-
-        batch.commit().await()
-
-
-
-        val item = Item(
-            id = romin_id,
-            name = name,
-            released = released,
-            rating = rating,
-            background_image = backgroundImage,
-            quantity = quantity ,
-            price = price
-        )
-
-        ItemManager.add(item)
-
-        db.collection("Item").add(item)
-
-
-    } catch (e: Exception) {
-        // Handle the exception
-        e.printStackTrace()
     }
 }
-
-
 
 suspend fun  searchItems(
     partialName: String,
@@ -246,20 +211,24 @@ fun updateCustomer_ItemByName(itemName: String, updatedItem: customer_Item,userE
                 val documents = task.result?.documents
                 if (documents != null) {
                     for (document in documents) {
-                        // Get the document ID and update the item
-                        val itemId = document.id
-                        updatedItem.id = itemId // Ensure the ID is set in the updatedItem object
+                        val state_item = document.getString("state")
+                        if (state_item=="cart") {
+                            // Get the document ID and update the item
+                            val itemId = document.id
+                            updatedItem.id =
+                                itemId // Ensure the ID is set in the updatedItem object
 
-                        // Update the item document with the new values
-                        collectionRef2.document(itemId).set(updatedItem)
-                            .addOnSuccessListener {
-                                // Update success for this item
-                                // You can handle success here, like showing a toast or performing additional actions.
-                            }
-                            .addOnFailureListener { e ->
-                                // Update failed for this item
-                                // Handle the error, show a toast, or log the error for debugging.
-                            }
+                            // Update the item document with the new values
+                            collectionRef2.document(itemId).set(updatedItem)
+                                .addOnSuccessListener {
+                                    // Update success for this item
+                                    // You can handle success here, like showing a toast or performing additional actions.
+                                }
+                                .addOnFailureListener { e ->
+                                    // Update failed for this item
+                                    // Handle the error, show a toast, or log the error for debugging.
+                                }
+                        }
                     }
                 }
             } else {
@@ -290,6 +259,13 @@ fun findDocumentByName(collectionPath: String, name: String, onComplete: (List<D
             onComplete(emptyList())
         }
 }
+
+
+
+
+
+
+
 
 
 

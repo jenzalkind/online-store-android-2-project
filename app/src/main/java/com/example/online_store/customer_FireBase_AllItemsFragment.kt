@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 import com.example.online_store.databinding.CustomerFireBaseAllItemsLayoutBinding
-import com.example.online_store.total.total_
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,18 +39,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
     private val binding get() = _binding!!
 
     val db = FirebaseFirestore.getInstance()
-//    val collectionRef = db.collection("Item")
 
-
-    var sold_out=0
-
-
-    var shop_quantity="0"
-    //var ALL_Item_customer= searchItemsByName(null,"cart")
-
-    //var ALL_ItemManager_customer = ALL_Item_customer.toMutableList()
-
-    //val db2 = Firebase.firestore
     val userEmail = FirebaseAuth.getInstance().currentUser?.email
 
 
@@ -60,11 +48,9 @@ class customer_FireBase_AllItemsFragment : Fragment() {
     lateinit var search_list: List<customer_Item>
 
 
-    var mony=0
 
     var state = "cart"
 
-    //TODO XXXX
 
 
 
@@ -80,73 +66,17 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
         binding.fab.setOnClickListener {
 
-            //ItemManager.items.clear()
             findNavController().navigate(R.id.action_customer_FireBase_AllItemsFragment_to_customer_buy_ItemsFragment)
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
         binding.fab3.setOnClickListener {
-            runBlocking {
-                if (userEmail != null) {
-
-                    mony = 0
-                    val collectionRef = db.collection(userEmail)
-
-                    var sum = 0
-                    collectionRef.get()
-                        .addOnSuccessListener { querySnapshot ->
-                            val batch = db.batch()
-                            for (document in querySnapshot.documents) {
-
-
-                                if (document.getString("state") == "cart") {
-
-                                    try {
-                                        var price = document.getString("price")
-                                        var quantity = document.getString("quantity")
-                                        if (price?.toInt() != null) {
-                                            if (quantity != null) {
-                                                sum = price.toInt() * quantity.toInt()
-                                                mony += sum
-                                            }
-
-                                        }
-                                    } catch (_: ArithmeticException) {
-
-                                    }
-                                }
-
-
-                            }
-
-                            batch.commit()
-                                .addOnSuccessListener {
-                                    // Collection cleared successfully
-                                }
-                                .addOnFailureListener { exception ->
-                                    // Error occurred while clearing the collection
-                                }
-                        }
-                        .addOnFailureListener { exception ->
-                            // Error occurred while fetching documents from the collection
-                        }
-
-                }
-
-                total_.value= mony.toString()
-
-                //showSimpleDialog()
 
                 findNavController().navigate(
-                    R.id.action_customer_FireBase_AllItemsFragment_to_the_purchase_Fragment/*,
-                    bundleOf("mony" to mony)*/
+                    R.id.action_customer_FireBase_AllItemsFragment_to_the_purchase_Fragment
                 )
-            }
+
         }
-
-
-
 
 
         runBlocking {
@@ -165,15 +95,9 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
                 ALL_ItemManager_customer.clear()
 
-                //val searchResults: List<customer_Item> = searchItemsByName(null, "cart")
                 ALL_ItemManager_customer = search_list.toMutableList()
             }
         }
-
-
-
-
-
 
 
 
@@ -196,16 +120,12 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                     ALL_ItemManager_customer = search_list.toMutableList()
 
 
-                    //search_list=searchItemsByName(binding.search.text.toString(),"cart")
                     binding.recycler.adapter =
                         Adapter_customer_FireBase_Item(
                             ALL_ItemManager_customer,
                             object : Adapter_customer_FireBase_Item.ItemListener {
 
                                 override fun onItemClicked(index: Int) {
-
-                                    //TODO edit to already buy for all onItemClicked
-
 
                                     ALL_ItemManager_customer[index]
 
@@ -222,24 +142,14 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                                     if (state=="wishlist")
                                     {
 
-/*                                        findNavController().navigate(
-                                            R.id.action_customer_FireBase_AllItemsFragment_to_buying_Item,
-                                            bundleOf("item" to index))*/
 
                                     }
-
-
-                                    ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
                                 }
 
                                 override fun onItemLongClicked(index: Int) {
-                                    /*findNavController().navigate(
-                                    R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                    bundleOf("item" to index)
-                                )*/
-                                    ///////////////////////////////////////////////////////////////////////////////////////////////
+                                    //TODO item detail maybe can connect to detail
 
                                 }
                             })
@@ -274,10 +184,6 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
                     binding.searchButton.performClick()
 
-                    //findNavController().navigate(R.id.)
-
-                    /////////////////////////////////////////////////////////////////////////////////
-                    true
                 }
 
 
@@ -288,7 +194,6 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                     binding.searchButton.performClick()
 
 
-                    /////////////////////////////////////////////////////////////////////////////////
                     true
                 }
 
@@ -301,7 +206,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                     binding.searchButton.performClick()
 
 
-                    /////////////////////////////////////////////////////////////////////////////////
+
                     true
                 }
                 else -> false
@@ -329,16 +234,10 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                         R.id.action_customer_FireBase_AllItemsFragment_to_buying_edit_Item,
                         bundleOf("item" to index)
                     )
-                    ///////////////////////////////////////////////////////////////////////////////////////////////
-
                 }
 
                 override fun onItemLongClicked(index: Int) {
-                    /*                            findNavController().navigate(
-                                                    R.id.action_fireBase_AllItemsFragment_to_edit_ItemFragment,
-                                                    bundleOf("item" to index)
-                                                )*/
-                    ///////////////////////////////////////////////////////////////////////////////////////////////
+                    //TODO item detail maybe can connect to detail
 
                 }
             })
@@ -366,7 +265,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 val position = viewHolder.adapterPosition
-                var deletedItem = ALL_ItemManager_customer[position].id
+                var deletedItem = ALL_ItemManager_customer[position]
                 var deletedItem_item =ALL_ItemManager_customer[position]
 
                 ALL_ItemManager_customer.removeAt(viewHolder.adapterPosition)
@@ -384,7 +283,10 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                                 var dd =document.id
 
 
-                                if (document.id == deletedItem) {
+
+
+                                if(document.getString("name")==deletedItem.name )
+                                {
                                     batch.delete(document.reference)
                                 }
                             }
@@ -412,18 +314,16 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                         findDocumentByName(collectionPath, documentName) { documents ->
                             if (documents.isNotEmpty()) {
                                 // Document found, do something with it
-                                val document = documents[0] // Assuming there's only one document with the given name
+                                val document = documents[0]
 
                                 val quantity = document.getString("quantity")
                                 if (quantity != null) {
-                                    // Use the "name" value here
-                                    // For example, you can display it in a TextView
 
 
 
                                     var quan =deletedItem_item.quantity.toInt()+quantity.toInt()
 
-                                    val documentName2  = Item(
+                                    val document_Item  = Item(
                                         deletedItem_item.id,
                                         deletedItem_item.name,
                                         deletedItem_item.released,
@@ -436,15 +336,11 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                                     )
 
 
-                                    updateItemsByName(documentName,documentName2)
-
-
-
+                                    updateItemsByName(documentName,document_Item)
 
 
 
                                 }
-                                // Access document fields using document["field_name"]
 
 
                             } else {
@@ -465,15 +361,8 @@ class customer_FireBase_AllItemsFragment : Fragment() {
                                 db.collection("Item").add(item2)
 
 
-                                // Document not found
                             }
                         }
-
-
-
-
-
-
 
 
 
@@ -501,23 +390,6 @@ class customer_FireBase_AllItemsFragment : Fragment() {
     }
 
 
-    /*private fun showSimpleDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-
-        builder.setTitle("Purchase")
-        builder.setMessage("Please note that you are about to make a purchase for ${mony}. All sales are final.")
-
-        builder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
-            //findNavController().navigate(R.id.action_customer_FireBase_AllItemsFragment_to_customer_buy_ItemsFragment,bundleOf("mony" to mony))
-        }
-
-        builder.setNegativeButton("Cancel") { _: DialogInterface, _: Int ->
-            // Do something when the user clicks the "Cancel" button (optional)
-        }
-
-        val dialog = builder.create()
-        dialog.show()
-    }*/
 
 
 }

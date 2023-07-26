@@ -101,7 +101,7 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
 
 
             }, {err ->
-                Log.d("Volley Sample Fail", err.message.toString())
+                Log.d(getString(R.string.volley_sample_fail), err.message.toString())
             })
 
             reqQueue.add(request)
@@ -168,7 +168,7 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
             var apiSample = apiSample3 + binding.search.text
             val reqQueue: RequestQueue = Volley.newRequestQueue(context)
             val request = JsonObjectRequest(Request.Method.GET,apiSample, null, { res ->
-                //Log.d("Volley Sample", res.getString("page"))
+
 
 
                 val jsonArray = res.getJSONArray("results")
@@ -185,7 +185,7 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
                         jsonObj.getString("name").lowercase(),
                         jsonObj.getString("released"),
                         jsonObj.getString("rating"),
-                        //jsonObj.getString("genres"),
+
                         jsonObj.getString("background_image"),
                         quantity.toString(),
                         price.toString()
@@ -208,7 +208,7 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
 
 
             }, {err ->
-                Log.d("Volley Sample Fail", err.message.toString())
+                Log.d(getString(R.string.volley_sample_fail), err.message.toString())
             })
 
             reqQueue.add(request)
@@ -234,8 +234,7 @@ class Api_All_Items_Fragment : Fragment(),Api_ItemAdapter.OnItemClickListener {
 
         chosenItem.setGame(itemList[position])
         findNavController().navigate(
-            R.id.action_api_All_Items_Fragment_to_apiNew_ItemFragment/*,
-            bundleOf("item" to chosenItem)*/
+            R.id.action_api_All_Items_Fragment_to_apiNew_ItemFragment
         )
 
 

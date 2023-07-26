@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -17,18 +18,28 @@ import androidx.navigation.fragment.findNavController
 import com.example.online_store.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginFrag : Fragment() {
+class LoginFrag : Fragment(R.layout.fragment_login) {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var username: EditText
     private lateinit var password: EditText
     private lateinit var isdialog: AlertDialog
+    //val userEmail = FirebaseAuth.getInstance().currentUser?.email
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val current_email =FirebaseAuth.getInstance().currentUser?.email?.trim()
+
 
         if (FirebaseAuth.getInstance().currentUser != null) {
-            findNavController().navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
+
+
+
+            when (current_email) {
+                "admin@gmail.com" ->findNavController().navigate(R.id.action_loginFragment_to_admin_Fragment)
+                else -> findNavController().navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
+
+            }
         }
     }
 
@@ -86,8 +97,15 @@ class LoginFrag : Fragment() {
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 isdialog.dismiss()
-                Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
+
+                when (username.text.toString().trim()) {
+                    "admin@gmail.com" ->Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_loginFragment_to_admin_Fragment)
+                    else -> Navigation.findNavController(binding.root)
+                        .navigate(R.id.action_loginFragment_to_customer_FireBase_AllItemsFragment)
+                }
+
+
             } else {
                 isdialog.dismiss()
                 binding.loginBtn.isEnabled = true
@@ -102,4 +120,11 @@ class LoginFrag : Fragment() {
             Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_sign_up_fregment)
         }
     }
+
+
+
+
+
+
+
 }
