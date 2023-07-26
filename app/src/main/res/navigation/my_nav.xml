@@ -14,8 +14,8 @@
         <action
             android:id="@+id/action_loginFragment_to_sign_up_fregment"
             app:destination="@id/sign_up_fregment"
-            app:popUpTo="@id/my_nav"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false" />
 
         <action
             android:id="@+id/action_loginFragment_to_customer_FireBase_AllItemsFragment"
@@ -69,7 +69,7 @@
         <action
             android:id="@+id/action_api_All_Items_Fragment_to_login"
             app:destination="@+id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
@@ -104,7 +104,7 @@
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_login"
             app:destination="@+id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
@@ -138,7 +138,7 @@
         <action
             android:id="@+id/action_admin_Fragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -181,7 +181,7 @@
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_customer_FireBase_AllItemsFragment_to_buying_edit_Item"
@@ -201,7 +201,7 @@
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_login"
             app:destination="@+id/loginFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"

@@ -206,10 +206,7 @@ class customer_FireBase_AllItemsFragment : Fragment() {
 
                 override fun onItemClicked(index: Int) {
 
-                    Toast.makeText(
-                        requireContext(),
-                        "${ALL_ItemManager_customer[index]}", Toast.LENGTH_SHORT
-                    ).show()
+
                     chosenItem_customer.setGame(ALL_ItemManager_customer[index])
 
 

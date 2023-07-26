@@ -149,7 +149,6 @@ class Buying_edit_Item : Fragment() {
 
         binding.buy.setOnClickListener{
 
-            //buying_quantity=binding.quantity8.text.toString()
 
             buying_quantity=convertToNumberOrZero(binding.quantity8.text.toString())
 
@@ -266,13 +265,6 @@ class Buying_edit_Item : Fragment() {
                                 .addOnSuccessListener { querySnapshot ->
                                     val batch = db.batch()
                                     for (document in querySnapshot.documents) {
-
-
-                                        //var vv= document.getString("id")
-                                        //var vv2 =item.id
-
-                                        //if(document.getString("id")==item.id )
-
 
 
                                         if(document.getString("name")==item.name)
