@@ -58,6 +58,7 @@
     <string name="admin_page">Admin page</string>
     <string name="remove_duplicates">Remove duplicates</string>
     <string name="back">Back</string>
+    <string name="logout">Logout</string>
     <string name="there_must_be_at_least_one_game">there must be at least one game</string>
     <string name="the_game_must_have_name">the game must have name</string>
     <string name="error">error</string>

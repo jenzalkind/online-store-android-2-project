@@ -11,10 +11,11 @@
     <color name="gray">#C4C4C4</color>
     <color name="gray_trans">#A6C4C4C4</color>
     <color name="blue">#15BDD3</color>
-    <color name="white_trans">#4DFFFFFF</color>
+    <color name="white_trans">#6FFFFFFF</color>
     <color name="button_color">#B31033</color>
     <color name="progress_bar_color">#F44336</color>
     <color name="packman_orange">#d03e19</color>
+    <color name="packman_orange_light">#CF5B3D</color>
     <color name="yellow">#FFC801</color>
 
 </resources>

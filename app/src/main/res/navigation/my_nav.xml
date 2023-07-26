@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/admin_Fragment">
+    app:startDestination="@id/loginFragment">
 
     <!-- Login page -->
     <fragment
@@ -60,6 +60,9 @@
         android:label="api_fragment_all__items"
         tools:layout="@layout/api_fragment_all__items">
         <action
+            android:id="@+id/action_api_All_Items_Fragment_to_login"
+            app:destination="@+id/loginFragment" />
+        <action
             android:id="@+id/action_api_All_Items_Fragment_to_admin_Fragment"
             app:destination="@id/admin_Fragment"
             app:popUpTo="@id/admin_Fragment"
@@ -88,6 +91,9 @@
         android:name="com.example.online_store.FireBase_AllItemsFragment"
         android:label="fire_base_all_items_layout"
         tools:layout="@layout/fire_base_all_items_layout">
+        <action
+            android:id="@+id/action_fireBase_AllItemsFragment_to_login"
+            app:destination="@+id/loginFragment" />
         <action
             android:id="@+id/action_fireBase_AllItemsFragment_to_detail_ItemFragment"
             app:destination="@id/detail_ItemFragment" />
@@ -173,6 +179,9 @@
         android:name="com.example.online_store.customer_buy_ItemsFragment"
         android:label="customer_buy_items_layout"
         tools:layout="@layout/customer_buy_items_layout">
+        <action
+            android:id="@+id/action_customer_buy_ItemsFragment_to_login"
+            app:destination="@+id/loginFragment"/>
         <action
             android:id="@+id/action_customer_buy_ItemsFragment_to_customer_FireBase_AllItemsFragment"
             app:destination="@id/customer_FireBase_AllItemsFragment" />
